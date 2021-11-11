@@ -6,18 +6,45 @@
             "id": "71d664f2-4943-4db6-bc20-6eebac246006",
             "actions": [
                 {
-                    "name": "FlySwitch",
-                    "type": "Button",
-                    "id": "d7ba855b-2781-4d73-9d80-bc8546364a2d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Move",
+                    "name": "Forward",
                     "type": "Value",
                     "id": "88050e99-86d7-44cf-bef8-f98ea142c59f",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Strafe",
+                    "type": "Value",
+                    "id": "65e05b42-558c-4ca3-b4fe-dbcc31f45d2e",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Hover",
+                    "type": "Value",
+                    "id": "07960730-c283-4a82-993b-3e1367b93850",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Roll",
+                    "type": "Value",
+                    "id": "c1de8653-2583-4581-a1cc-a53a44586066",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LookPosition",
+                    "type": "Value",
+                    "id": "147babd0-bd25-45ab-8015-da30e6f2b2cd",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -26,70 +53,147 @@
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "2d0e80b2-38dc-4c1a-95b4-9757c487347a",
-                    "path": "<Keyboard>/space",
+                    "name": "1D Axis",
+                    "id": "1daa2d2a-19bf-41dd-9007-d05ac93e59ca",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "FlySwitch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "2D Vector",
-                    "id": "3358e952-94d0-44f8-b05e-c8492b7a808e",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
+                    "action": "Forward",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "cd596ca2-29c9-40c3-ae0b-5c0a7938058d",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "9a1acdf5-e34b-45f7-83f7-2a119201ca63",
+                    "name": "negative",
+                    "id": "340c5716-f02c-4bab-8c85-fe3d6b6b39d3",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Forward",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
-                    "id": "81eeee91-f717-4b5d-9fc2-d48d4d3fd2bb",
+                    "name": "positive",
+                    "id": "57c064b4-0009-40f9-9246-65a68a29f5df",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Forward",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "3d57cbac-6818-4fbc-8f73-11a7b99c193c",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Strafe",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "2a455ba4-00f8-4d12-bc73-6e59fab1d984",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Strafe",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
-                    "id": "8fe97987-2152-4da9-952f-2837a4ea78da",
+                    "name": "positive",
+                    "id": "ecd8e9f3-2799-4e69-89a8-3c9488cee07d",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "Strafe",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "d30cf9ed-b045-4322-8cf8-6f119da5bfc5",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hover",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "f88a61ad-812e-430b-bcad-1bf3cd5022b1",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hover",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "557c9c5b-084c-4f55-b2b8-8fa448e1b252",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hover",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "1D Axis",
+                    "id": "161e96b2-2ce9-448f-ad00-b82336493154",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "80de0a9f-d6b8-46af-bb09-86ac943b525b",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "23d8b531-ba95-4300-ac23-8e36c9c7924f",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ac3e0d84-31b8-4ec5-a55a-4466c44c1e2f",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LookPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
