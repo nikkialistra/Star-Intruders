@@ -3,10 +3,9 @@
 namespace Player
 {
     [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(FlySwitching))]
     public class Movement : MonoBehaviour
     {
-        [SerializeField] private Camera _camera;
-        
         [Header("Speed")]
         [SerializeField] private float _forwardSpeed;
         [SerializeField] private float _strafeSpeed;
@@ -30,10 +29,12 @@ namespace Player
         private float _currentRoll;
         
         private Rigidbody _rigidBody;
+        private FlySwitching _flySwitching;
 
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody>();
+            _flySwitching = GetComponent<FlySwitching>();
         }
 
         private void Start()
@@ -44,6 +45,11 @@ namespace Player
 
         public void Move(MoveInput moveInput)
         {
+            if (!_flySwitching.CanFly)
+            {
+                return;
+            }
+            
             CalculateSpeed(moveInput);
             CalculateLookOffset(moveInput);
             CalculateRoll(moveInput);

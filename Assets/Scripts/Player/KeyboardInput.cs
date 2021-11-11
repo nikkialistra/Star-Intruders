@@ -42,6 +42,7 @@ namespace Player
         private void FixedUpdate()
         {
             Move();
+            TryFlySwitch();
         }
 
         private void ReadMovementActions()
@@ -56,6 +57,17 @@ namespace Player
         private void Move()
         {
             _movement.Move(_moveInput);
+        }
+
+        private void TryFlySwitch()
+        {
+            if (_moveInput.HoverValue < 0f)
+            {
+                _flySwitching.TryLand();
+            } else if (_moveInput.HoverValue > 0f)
+            {
+                _flySwitching.TryTakeoff();
+            }
         }
     }
 }
