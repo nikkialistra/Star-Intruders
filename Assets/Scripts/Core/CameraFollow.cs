@@ -13,7 +13,7 @@ namespace Core
         private void LateUpdate()
         {
             var newPosition = _followObject.transform.position + _cameraOffset;
-            transform.position = Vector3.Slerp(transform.position, newPosition, _smoothFactor);
+            transform.position = Vector3.Slerp(transform.position, newPosition, _smoothFactor * Time.deltaTime);
             transform.LookAt(_followObject);
         }
     }
