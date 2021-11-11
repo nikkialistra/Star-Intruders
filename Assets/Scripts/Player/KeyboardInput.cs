@@ -30,13 +30,18 @@ namespace Player
             _forwardAction = _input.actions.FindAction("Forward");
             _strafeAction = _input.actions.FindAction("Strafe");
             _hoverAction = _input.actions.FindAction("Hover");
-            _rollAction = _input.actions.FindAction("Roll");
             _lookPositionAction = _input.actions.FindAction("LookPosition");
+            _rollAction = _input.actions.FindAction("Roll");
         }
 
         private void Update()
         {
             ReadMovementActions();
+        }
+
+        private void FixedUpdate()
+        {
+            Move();
         }
 
         private void ReadMovementActions()
@@ -46,7 +51,10 @@ namespace Player
             _moveInput.HoverValue = _hoverAction.ReadValue<float>();
             _moveInput.RollValue = _rollAction.ReadValue<float>();
             _moveInput.LookPositionValue = _lookPositionAction.ReadValue<Vector2>();
-            
+        }
+
+        private void Move()
+        {
             _movement.Move(_moveInput);
         }
     }

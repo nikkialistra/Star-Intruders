@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player
 {
@@ -45,12 +44,22 @@ namespace Player
 
         public void Move(MoveInput moveInput)
         {
+            CalculateSpeed(moveInput);
             CalculateLookOffset(moveInput);
             CalculateRoll(moveInput);
-            CalculateSpeed(moveInput);
 
-            ApplyRotation();
             ApplySpeed();
+            ApplyRotation();
+        }
+
+        private void CalculateSpeed(MoveInput moveInput)
+        {
+            _currentForwardSpeed = Mathf.Lerp(_currentForwardSpeed, moveInput.ForwardValue * _forwardSpeed,
+                _forwardAcceleration * Time.fixedDeltaTime);
+            _currentStrafeSpeed = Mathf.Lerp(_currentStrafeSpeed, moveInput.StrafeValue * _strafeSpeed,
+                _strafeAcceleration * Time.fixedDeltaTime);
+            _currentHoverSpeed = Mathf.Lerp(_currentHoverSpeed, moveInput.HoverValue * _hoverSpeed,
+                _hoverAcceleration * Time.fixedDeltaTime);
         }
 
         private void CalculateLookOffset(MoveInput moveInput)
@@ -66,27 +75,17 @@ namespace Player
             _currentRoll = Mathf.Lerp(_currentRoll, moveInput.RollValue, _rollAcceleration * Time.fixedDeltaTime);
         }
 
-        private void CalculateSpeed(MoveInput moveInput)
+        private void ApplySpeed()
         {
-            _currentForwardSpeed = Mathf.Lerp(_currentForwardSpeed, moveInput.ForwardValue * _forwardSpeed,
-                _forwardAcceleration * Time.fixedDeltaTime);
-            _currentStrafeSpeed = Mathf.Lerp(_currentStrafeSpeed, moveInput.StrafeValue * _strafeSpeed,
-                _strafeAcceleration * Time.fixedDeltaTime);
-            _currentHoverSpeed = Mathf.Lerp(_currentHoverSpeed, moveInput.HoverValue * _hoverSpeed,
-                _hoverAcceleration * Time.fixedDeltaTime);
+            var velocity = (transform.forward * _currentForwardSpeed) + (transform.right * _currentStrafeSpeed) +
+                           (transform.up * _currentHoverSpeed);
+            _rigidBody.velocity = velocity;
         }
 
         private void ApplyRotation()
         {
             var rotation = new Vector3(-_lookOffset.y * _lookSpeed, _lookOffset.x * _lookSpeed, -_currentRoll * _rollSpeed) * Time.fixedDeltaTime;
             _rigidBody.MoveRotation(_rigidBody.rotation * Quaternion.Euler(rotation));
-        }
-
-        private void ApplySpeed()
-        {
-            transform.position += transform.forward * (_currentForwardSpeed * Time.deltaTime);
-            transform.position += transform.right * (_currentStrafeSpeed * Time.deltaTime);
-            transform.position += transform.up * (_currentHoverSpeed * Time.deltaTime);
         }
     }
 }
