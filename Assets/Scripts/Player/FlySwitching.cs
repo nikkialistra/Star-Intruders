@@ -1,5 +1,6 @@
-using System;
+using System.Collections;
 using Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Player
@@ -12,11 +13,14 @@ namespace Player
         [SerializeField] private bool _landed;
         [SerializeField] private float _landDistance;
 
-        private Rigidbody _rigidbody;
+        [SerializeField] private float _landingRotateSpeed;
+        
+        private Rigidbody _rigidBody;
+        private Vector3 _landingAngle;
 
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
+            _rigidBody = GetComponent<Rigidbody>();
         }
 
         public void TryLand()
@@ -26,19 +30,21 @@ namespace Player
                 return;
             }
 
-            if (CheckForLandingSurface())
+            if (GetLandingSurfaceWithAngle())
             {
                 _landed = true;
                 PlayLandingAnimation();
             }
         }
 
-        private bool CheckForLandingSurface()
+        private bool GetLandingSurfaceWithAngle()
         {
             if (Physics.Raycast(transform.position, -transform.up, out var hit, _landDistance))
             {
                 if (hit.transform.TryGetComponent(out LandingSurface landingSurface))
                 {
+                    _landingAngle = landingSurface.transform.rotation.eulerAngles;
+                    _landingAngle.y = _rigidBody.rotation.eulerAngles.y;
                     return true;
                 }
             }
@@ -47,7 +53,27 @@ namespace Player
 
         private void PlayLandingAnimation()
         {
-            _rigidbody.isKinematic = true;
+            _rigidBody.isKinematic = true;
+
+            StartCoroutine(RotateSpaceShipToLandingAngle());
+        }
+
+        private IEnumerator RotateSpaceShipToLandingAngle()
+        {
+            while (!ApproximatelyEqual())
+            {
+                var currentRotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(_landingAngle), 
+                    _landingRotateSpeed * Time.fixedDeltaTime);
+                _rigidBody.rotation = currentRotation;
+                
+                yield return new WaitForFixedUpdate();
+            }
+        }
+
+        private bool ApproximatelyEqual()
+        {
+            // If difference less than 1 degree
+            return Mathf.Abs(Quaternion.Dot(_rigidBody.rotation, Quaternion.Euler(_landingAngle))) >= 0.9999619;
         }
 
         public void TryTakeoff()
@@ -63,7 +89,7 @@ namespace Player
 
         private void PlayTakeOffAnimation()
         {
-            _rigidbody.isKinematic = false;
+            _rigidBody.isKinematic = false;
         }
     }
 }

@@ -413,6 +413,7 @@ GameObject:
   - component: {fileID: 714757836}
   - component: {fileID: 714757835}
   - component: {fileID: 714757839}
+  - component: {fileID: 714757840}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -490,14 +491,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 714757834}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.012827826, y: 0, z: 0, w: 0.99991775}
   m_LocalPosition: {x: 0, y: -2.06, z: 0}
   m_LocalScale: {x: 30, y: 1, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.47, y: 0, z: 0}
 --- !u!54 &714757839
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -514,6 +515,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &714757840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714757834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c99f561ab03741c3a4580338aac97099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,6 +638,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c009c21ae7eb27479d4b62bb9748e56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _landed: 0
+  _landDistance: 7
+  _landingRotateSpeed: 0
 --- !u!114 &928780816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,7 +684,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb771ad0c8bd498389cb492b26555c79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _camera: {fileID: 330585545}
   _forwardSpeed: 25
   _strafeSpeed: 10
   _hoverSpeed: 5
