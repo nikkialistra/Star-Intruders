@@ -11,7 +11,7 @@ namespace Player
         
         [Header("Landing")]
         [SerializeField] private bool _landed;
-        [SerializeField] private float _landDistance;
+        [SerializeField] private float _landingDistance;
         [SerializeField] private float _landingRotateSpeed;
         [SerializeField] private float _landingSpeed;
         
@@ -50,7 +50,7 @@ namespace Player
 
         private bool GetLandingSurfaceWithAngle()
         {
-            if (Physics.Raycast(transform.position, -transform.up, out var hit, _landDistance))
+            if (Physics.Raycast(transform.position, -transform.up, out var hit, _landingDistance))
             {
                 if (hit.transform.TryGetComponent(out LandingSurface landingSurface))
                 {
@@ -85,8 +85,10 @@ namespace Player
 
         private IEnumerator LandSpaceShipToSurface()
         {
-            var distanceToLand = Vector3.Distance(_spaceShipBottomPoint.position, _landingSurface.transform.position);
-            var directionToLand = (_landingSurface.transform.position - _spaceShipBottomPoint.position).normalized;
+            var closestPointToLandingSurface = GetClosestPointToLandingSurface();
+
+            var distanceToLand = Vector3.Distance(_spaceShipBottomPoint.position, closestPointToLandingSurface);
+            var directionToLand = (closestPointToLandingSurface - _spaceShipBottomPoint.position).normalized;
             
             var passedDistance = 0f;
             Vector3 deltaMove;
@@ -99,6 +101,12 @@ namespace Player
 
                 yield return new WaitForFixedUpdate();
             }
+        }
+
+        private Vector3 GetClosestPointToLandingSurface()
+        {
+            var landingSurfaceCollider = _landingSurface.GetComponent<Collider>();
+            return landingSurfaceCollider.ClosestPoint(_spaceShipBottomPoint.position);
         }
 
         private bool ApproximatelyEqual()
