@@ -49,7 +49,7 @@ namespace Player
             {
                 return;
             }
-            
+
             CalculateSpeed(moveInput);
             CalculateLookOffset(moveInput);
             CalculateRoll(moveInput);

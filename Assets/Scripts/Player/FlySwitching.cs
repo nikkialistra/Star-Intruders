@@ -7,7 +7,7 @@ namespace Player
     [RequireComponent(typeof(Rigidbody))]
     public class FlySwitching : MonoBehaviour
     {
-        public bool CanFly => !_landed;
+        public bool CanFly { get; private set; }
         
         [Header("Landing")]
         [SerializeField] private bool _landed;
@@ -32,6 +32,7 @@ namespace Player
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody>();
+            CanFly = !_landed;
         }
 
         public void TryLand()
@@ -44,6 +45,7 @@ namespace Player
             if (GetLandingSurfaceWithAngle())
             {
                 _landed = true;
+                CanFly = false;
                 PlayLandingAnimation();
             }
         }
@@ -123,6 +125,7 @@ namespace Player
             }
             
             StopCoroutine(_landingAnimation);
+            _landed = false;
             
             PlayTakeOffAnimation();
         }
@@ -147,8 +150,9 @@ namespace Player
 
                 yield return new WaitForFixedUpdate();
             }
-            _landed = false;
+            
             _rigidBody.isKinematic = false;
+            CanFly = true;
         }
     }
 }
