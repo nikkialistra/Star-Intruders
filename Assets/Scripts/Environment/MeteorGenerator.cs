@@ -7,17 +7,18 @@ namespace Environment
     {
         [SerializeField] private List<GameObject> _meteors;
 
-        [SerializeField] private int _quantityToGenerate;
-        [SerializeField] private float _radius;
+        [SerializeField] private int _amountToSpawn;
+        [SerializeField] private float _minRange;
+        [SerializeField] private float _maxRange;
         [SerializeField] private float _scaleRange;
 
         private void Start()
         {
             var quantity = 0;
-            while (quantity < _quantityToGenerate)
+            while (quantity < _amountToSpawn)
             {
-                var spawnPosition = new Vector3(Random.insideUnitSphere.x * _radius, 
-                    Random.insideUnitSphere.y * _radius, Random.insideUnitSphere.z * _radius);
+                var spawnPosition = transform.position + new Vector3(Random.insideUnitSphere.x * Random.Range(_minRange, _maxRange), 
+                    Random.insideUnitSphere.y * Random.Range(_minRange, _maxRange), Random.Range(_minRange, _maxRange));
 
                 if (spawnPosition.z > transform.position.z)
                 {

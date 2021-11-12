@@ -436,9 +436,10 @@ MonoBehaviour:
   - {fileID: 381902241772421981, guid: 21523c9edb9199e4ba593eae1403a545, type: 3}
   - {fileID: 7347182212211368593, guid: aece1be32de4dfe48b587c30d91bd13c, type: 3}
   - {fileID: 757705196554314696, guid: 1a2f877015b920a4883897984802466b, type: 3}
-  _quantityToGenerate: 3000
-  _radius: 3600
-  _scaleRange: 50
+  _amountToSpawn: 700
+  _minRange: 300
+  _maxRange: 3600
+  _scaleRange: 40
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
