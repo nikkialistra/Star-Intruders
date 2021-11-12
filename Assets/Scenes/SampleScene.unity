@@ -642,6 +642,8 @@ MonoBehaviour:
   _landDistance: 7
   _landingRotateSpeed: 3.5
   _landingSpeed: 3.5
+  _takeOffAltitude: 5
+  _takeoffSpeed: 3.5
   _spaceShipBottomPoint: {fileID: 1777864584}
 --- !u!114 &928780816
 MonoBehaviour:

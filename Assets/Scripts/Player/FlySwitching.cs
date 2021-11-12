@@ -14,6 +14,10 @@ namespace Player
         [SerializeField] private float _landDistance;
         [SerializeField] private float _landingRotateSpeed;
         [SerializeField] private float _landingSpeed;
+        
+        [Header("Takeoff")] 
+        [SerializeField] private float _takeOffAltitude;
+        [SerializeField] private float _takeoffSpeed;
 
         [Header("Transform")]
         [SerializeField] private Transform _spaceShipBottomPoint;
@@ -109,8 +113,7 @@ namespace Player
             {
                 return;
             }
-
-            _landed = false;
+            
             StopCoroutine(_landingAnimation);
             
             PlayTakeOffAnimation();
@@ -118,6 +121,25 @@ namespace Player
 
         private void PlayTakeOffAnimation()
         {
+            StartCoroutine(GainAltitude());
+        }
+
+        private IEnumerator GainAltitude()
+        {
+            var directionToTakeoff = _rigidBody.transform.up;
+            
+            var passedDistance = 0f;
+            Vector3 deltaMove;
+            
+            while (passedDistance < _takeOffAltitude)
+            {
+                deltaMove = directionToTakeoff * (_takeoffSpeed * Time.fixedDeltaTime);
+                _rigidBody.MovePosition(_rigidBody.position + deltaMove);
+                passedDistance += deltaMove.magnitude;
+
+                yield return new WaitForFixedUpdate();
+            }
+            _landed = false;
             _rigidBody.isKinematic = false;
         }
     }
