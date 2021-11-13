@@ -12,10 +12,7 @@ namespace CameraControls
 
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotateSpeed;
-
-        [SerializeField] private float _switchToCockpitMoveSpeed;
-        [SerializeField] private float _switchToCockpitRotateSpeed;
-
+        
         private bool _isChasing = true;
         
         private bool _switchingFinished;
@@ -38,15 +35,15 @@ namespace CameraControls
         {
             if (_isChasing)
             {
-                MoveByChasing();
+                MoveToChasePoint();
             }
             else
             {
-                MoveFromCockpit();
+                MoveToCockpitPoint();
             }
         }
 
-        private void MoveByChasing()
+        private void MoveToChasePoint()
         {
             _cameraTransform.position =
                 Vector3.Lerp(_cameraTransform.position, _chasePoint.position, _moveSpeed * Time.deltaTime);
@@ -54,26 +51,11 @@ namespace CameraControls
                 Quaternion.Lerp(_cameraTransform.rotation, _chasePoint.rotation, _rotateSpeed * Time.deltaTime);
         }
 
-        private void MoveFromCockpit()
+        private void MoveToCockpitPoint()
         {
-            if (_switchingFinished)
-            {
-                _cameraTransform.position = _cockpitPoint.position;
-                _cameraTransform.rotation = _cockpitPoint.rotation;
-            }
-            else
-            {
-                _cameraTransform.position =
-                    Vector3.Lerp(_cameraTransform.position, _cockpitPoint.position, _switchToCockpitMoveSpeed * Time.deltaTime);
-                _cameraTransform.rotation =
-                    Quaternion.Lerp(_cameraTransform.rotation, _cockpitPoint.rotation,
-                        _switchToCockpitRotateSpeed * Time.deltaTime);
-            }
+            _cameraTransform.position = _cockpitPoint.position;
+            _cameraTransform.rotation = _cockpitPoint.rotation;
 
-            if ((_cameraTransform.position - _cockpitPoint.position).magnitude < 0.3f)
-            {
-                _switchingFinished = true;
-            }
         }
 
         private void SubtractLastShake()
@@ -89,7 +71,6 @@ namespace CameraControls
         public void SwitchView()
         {
             _isChasing = !_isChasing;
-            _switchingFinished = false;
         }
     }
 }
