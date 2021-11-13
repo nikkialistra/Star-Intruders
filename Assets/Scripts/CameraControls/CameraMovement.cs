@@ -19,7 +19,7 @@ namespace CameraControls
             _shakeCameraOffset = GetComponent<ShakeCameraOffset>();
         }
 
-        private void LateUpdate()
+        private void FixedUpdate()
         {
             transform.position -= _shakeCameraOffset.LastValue;
 

@@ -1,12 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace CameraControls
 {
     public class CameraSwitching : MonoBehaviour
     {
-        public Camera _cockpitCamera;
-        public Camera _chaseCamera;
-        public Camera _activeCamera;
+        [SerializeField] private  Camera _chaseCamera;
+        [SerializeField] private Camera _cockpitCamera;
+        private Camera _activeCamera;
+
+        private void Start()
+        {
+            _activeCamera = _chaseCamera;
+        }
 
         public void Switch()
         {
