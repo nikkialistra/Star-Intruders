@@ -51,7 +51,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "SwitchCamera",
+                    "name": "SwitchView",
                     "type": "Button",
                     "id": "8f06c0c7-9ad0-4de6-8291-aa812fff2b59",
                     "expectedControlType": "Button",
@@ -211,7 +211,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchCamera",
+                    "action": "SwitchView",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

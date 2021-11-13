@@ -7,7 +7,7 @@ namespace Player
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(FlySwitching))]
     [RequireComponent(typeof(Movement))]
-    [RequireComponent(typeof(CameraSwitching))]
+    [RequireComponent(typeof(CameraMovement))]
     public class KeyboardInput : MonoBehaviour
     {
         private readonly MoveInput _moveInput = new MoveInput();
@@ -16,28 +16,28 @@ namespace Player
         
         private FlySwitching _flySwitching;
         private Movement _movement;
-        private CameraSwitching _cameraSwitching;
+        private CameraMovement _cameraMovement;
 
         private InputAction _forwardAction;
         private InputAction _strafeAction;
         private InputAction _hoverAction;
         private InputAction _rollAction;
         private InputAction _lookPositionAction;
-        private InputAction _switchCameraAction;
+        private InputAction _switchViewAction;
 
         private void Awake()
         {
             _input = GetComponent<PlayerInput>();
             _flySwitching = GetComponent<FlySwitching>();
             _movement = GetComponent<Movement>();
-            _cameraSwitching = GetComponent<CameraSwitching>();
+            _cameraMovement = GetComponent<CameraMovement>();
             
             _forwardAction = _input.actions.FindAction("Forward");
             _strafeAction = _input.actions.FindAction("Strafe");
             _hoverAction = _input.actions.FindAction("Hover");
             _lookPositionAction = _input.actions.FindAction("LookPosition");
             _rollAction = _input.actions.FindAction("Roll");
-            _switchCameraAction = _input.actions.FindAction("SwitchCamera");
+            _switchViewAction = _input.actions.FindAction("SwitchView");
         }
 
         private void Update()
@@ -53,12 +53,12 @@ namespace Player
 
         private void OnEnable()
         {
-            _switchCameraAction.started += SwitchCamera;
+            _switchViewAction.started += SwitchView;
         }
 
         private void OnDisable()
         {
-            _switchCameraAction.started -= SwitchCamera;
+            _switchViewAction.started -= SwitchView;
         }
 
         private void ReadMovementActions()
@@ -86,9 +86,9 @@ namespace Player
             }
         }
 
-        private void SwitchCamera(InputAction.CallbackContext context)
+        private void SwitchView(InputAction.CallbackContext context)
         {
-            _cameraSwitching.Switch();
+            _cameraMovement.SwitchView();
         }
     }
 }

@@ -5,12 +5,20 @@ namespace CameraControls
     [RequireComponent(typeof(ShakeCameraOffset))]
     public class CameraMovement : MonoBehaviour
     {
-        [SerializeField] private Transform _targetPoint;
+        [SerializeField] private Transform _cameraTransform;
+        
+        [SerializeField] private Transform _chasePoint;
+        [SerializeField] private Transform _cockpitPoint;
 
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotateSpeed;
+
+        [SerializeField] private float _switchToCockpitMoveSpeed;
+        [SerializeField] private float _switchToCockpitRotateSpeed;
+
+        private bool _isChasing = true;
         
-        [SerializeField] private bool _shouldFollow;
+        private bool _switchingFinished;
 
         private ShakeCameraOffset _shakeCameraOffset;
 
@@ -21,22 +29,67 @@ namespace CameraControls
 
         private void FixedUpdate()
         {
-            transform.position -= _shakeCameraOffset.LastValue;
+            SubtractLastShake();
+            MoveCamera();
+            AddNewShake();
+        }
 
-            if (_shouldFollow)
+        private void MoveCamera()
+        {
+            if (_isChasing)
             {
-                transform.position = Vector3.Lerp(transform.position, _targetPoint.position, _moveSpeed * Time.deltaTime);
-                transform.rotation = Quaternion.Lerp(transform.rotation, _targetPoint.rotation, _rotateSpeed * Time.deltaTime);
+                MoveByChasing();
+            }
+            else
+            {
+                MoveFromCockpit();
+            }
+        }
+
+        private void MoveByChasing()
+        {
+            _cameraTransform.position =
+                Vector3.Lerp(_cameraTransform.position, _chasePoint.position, _moveSpeed * Time.deltaTime);
+            _cameraTransform.rotation =
+                Quaternion.Lerp(_cameraTransform.rotation, _chasePoint.rotation, _rotateSpeed * Time.deltaTime);
+        }
+
+        private void MoveFromCockpit()
+        {
+            if (_switchingFinished)
+            {
+                _cameraTransform.position = _cockpitPoint.position;
+                _cameraTransform.rotation = _cockpitPoint.rotation;
+            }
+            else
+            {
+                _cameraTransform.position =
+                    Vector3.Lerp(_cameraTransform.position, _cockpitPoint.position, _switchToCockpitMoveSpeed * Time.deltaTime);
+                _cameraTransform.rotation =
+                    Quaternion.Lerp(_cameraTransform.rotation, _cockpitPoint.rotation,
+                        _switchToCockpitRotateSpeed * Time.deltaTime);
             }
 
+            if ((_cameraTransform.position - _cockpitPoint.position).magnitude < 0.3f)
+            {
+                _switchingFinished = true;
+            }
+        }
+
+        private void SubtractLastShake()
+        {
+            transform.position -= _shakeCameraOffset.LastValue;
+        }
+
+        private void AddNewShake()
+        {
             transform.position += _shakeCameraOffset.CurrentValue;
         }
 
-        public void ResetCamera()
+        public void SwitchView()
         {
-            _shouldFollow = true;
-            transform.position = _targetPoint.position;
-            transform.rotation = _targetPoint.rotation;
+            _isChasing = !_isChasing;
+            _switchingFinished = false;
         }
     }
 }
