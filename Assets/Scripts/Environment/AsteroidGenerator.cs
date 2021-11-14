@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Environment
 {
-    public class MeteorGenerator : MonoBehaviour
+    public class AsteroidGenerator : MonoBehaviour
     {
         [SerializeField] private List<GameObject> _meteors;
 
