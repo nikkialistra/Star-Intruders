@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Player
 {
     [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(PlayerAnimations))]
     public class FlySwitching : MonoBehaviour
     {
         public bool CanFly { get; private set; }
@@ -23,6 +24,7 @@ namespace Player
         [SerializeField] private Transform _spaceShipBottomPoint;
         
         private Rigidbody _rigidBody;
+        private PlayerAnimations _playerAnimations;
         
         private LandingSurface _landingSurface;
         private Vector3 _landingAngle;
@@ -32,6 +34,7 @@ namespace Player
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody>();
+            _playerAnimations = GetComponent<PlayerAnimations>();
             CanFly = !_landed;
         }
 
@@ -67,6 +70,7 @@ namespace Player
 
         private void PlayLandingAnimation()
         {
+            _playerAnimations.Land();
             _rigidBody.isKinematic = true;
 
             _landingAnimation = StartCoroutine(RotateSpaceShipToLandingAngle());
@@ -132,6 +136,7 @@ namespace Player
 
         private void PlayTakeOffAnimation()
         {
+            _playerAnimations.TakeOff();
             StartCoroutine(GainAltitude());
         }
 

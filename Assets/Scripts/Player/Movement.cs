@@ -4,6 +4,7 @@ namespace Player
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(FlySwitching))]
+    [RequireComponent(typeof(PlayerAnimations))]
     public class Movement : MonoBehaviour
     {
         [Header("Speed")]
@@ -19,6 +20,9 @@ namespace Player
         [SerializeField] private float _hoverAcceleration;
         [SerializeField] private float _rollAcceleration;
 
+        [Header("Threshold")]
+        [SerializeField] private float _moveThreshold;
+
         private float _currentForwardSpeed;
         private float _currentStrafeSpeed;
         private float _currentHoverSpeed;
@@ -30,11 +34,13 @@ namespace Player
         
         private Rigidbody _rigidBody;
         private FlySwitching _flySwitching;
+        private PlayerAnimations _playerAnimations;
 
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody>();
             _flySwitching = GetComponent<FlySwitching>();
+            _playerAnimations = GetComponent<PlayerAnimations>();
         }
 
         private void Start()
@@ -56,6 +62,8 @@ namespace Player
 
             ApplySpeed();
             ApplyRotation();
+
+            UpdateMoveAnimations();
         }
 
         private void CalculateSpeed(MoveInput moveInput)
@@ -92,6 +100,18 @@ namespace Player
         {
             var rotation = new Vector3(-_lookOffset.y * _lookSpeed, _lookOffset.x * _lookSpeed, -_currentRoll * _rollSpeed) * Time.fixedDeltaTime;
             _rigidBody.MoveRotation(_rigidBody.rotation * Quaternion.Euler(rotation));
+        }
+
+        private void UpdateMoveAnimations()
+        {
+            if (_rigidBody.velocity.magnitude > _moveThreshold)
+            {
+                _playerAnimations.Move();
+            }
+            else
+            {
+                _playerAnimations.Stop();
+            }
         }
     }
 }
