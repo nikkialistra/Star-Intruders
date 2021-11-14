@@ -22,6 +22,9 @@ namespace Player
 
         [Header("Transform")]
         [SerializeField] private Transform _spaceShipBottomPoint;
+
+        [SerializeField] private float _timeToTurnOffEngines;
+        
         
         private Rigidbody _rigidBody;
         private PlayerAnimations _playerAnimations;
@@ -30,6 +33,7 @@ namespace Player
         private Vector3 _landingAngle;
         
         private Coroutine _landingAnimation;
+        private Coroutine _takeOffAnimation;
 
         private void Awake()
         {
@@ -70,6 +74,11 @@ namespace Player
 
         private void PlayLandingAnimation()
         {
+            if (_takeOffAnimation != null)
+            {
+                StopCoroutine(_takeOffAnimation);
+            }
+            
             _playerAnimations.Land();
             _rigidBody.isKinematic = true;
 
@@ -107,6 +116,9 @@ namespace Player
 
                 yield return new WaitForFixedUpdate();
             }
+            
+            yield return new WaitForSeconds(_timeToTurnOffEngines);
+            _playerAnimations.TurnOffEngines();
         }
 
         private Vector3 GetClosestPointToLandingSurface()
@@ -127,8 +139,12 @@ namespace Player
             {
                 return;
             }
-            
-            StopCoroutine(_landingAnimation);
+
+            if (_landingAnimation != null)
+            {
+                StopCoroutine(_landingAnimation);
+            }
+
             _landed = false;
             
             PlayTakeOffAnimation();
@@ -137,7 +153,7 @@ namespace Player
         private void PlayTakeOffAnimation()
         {
             _playerAnimations.TakeOff();
-            StartCoroutine(GainAltitude());
+            _takeOffAnimation = StartCoroutine(GainAltitude());
         }
 
         private IEnumerator GainAltitude()

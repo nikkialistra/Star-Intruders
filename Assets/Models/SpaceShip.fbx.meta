@@ -12,6 +12,21 @@ ModelImporter:
   - first:
       74: 3026377613317129161
     second: Armature|Takeoff
+  - first:
+      74: 2920023865792766560
+    second: Armature|PlaneAction
+  - first:
+      74: 7952638923583082356
+    second: Plane|0Default
+  - first:
+      74: -5187248419258813496
+    second: Plane|PlaneAction
+  - first:
+      74: 1054805369801014851
+    second: DisabledEngineMaterial|0Default
+  - first:
+      74: -1582630358074644568
+    second: DisabledEngineMaterial|PlaneAction
   externalObjects: {}
   materials:
     materialImportMode: 2

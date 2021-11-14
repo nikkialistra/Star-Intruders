@@ -808,6 +808,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &911400102 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7956797178248769713, guid: 2f354ba09badf854495f8f2c38e72bb3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1015138023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &923877396 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3027000497013553188, guid: 2f354ba09badf854495f8f2c38e72bb3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1015138023}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &928780812
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,10 +891,11 @@ MonoBehaviour:
   _landed: 0
   _landingDistance: 12
   _landingRotateSpeed: 3.5
-  _landingSpeed: 6
+  _landingSpeed: 9
   _takeOffAltitude: 5
   _takeoffSpeed: 3.5
   _spaceShipBottomPoint: {fileID: 1616206097}
+  _timeToTurnOffEngines: 0.4
 --- !u!114 &928780816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1009,6 +1022,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1015138025}
+  _engines:
+  - {fileID: 1621094978}
+  - {fileID: 911400102}
+  - {fileID: 923877396}
+  - {fileID: 2142920604}
+  _enabledEngine: {fileID: 3225888731022386735, guid: 2f354ba09badf854495f8f2c38e72bb3,
+    type: 3}
+  _disabledEngine: {fileID: -6004751174935338280, guid: 2f354ba09badf854495f8f2c38e72bb3,
+    type: 3}
 --- !u!1001 &1015138023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1128,10 +1150,22 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616206096}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.74, z: 0}
+  m_LocalPosition: {x: 0, y: -1.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 928780813}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &1621094978 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5968468669654978153, guid: 2f354ba09badf854495f8f2c38e72bb3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1015138023}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &2142920604 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4502655387319566578, guid: 2f354ba09badf854495f8f2c38e72bb3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1015138023}
+  m_PrefabAsset: {fileID: 0}
