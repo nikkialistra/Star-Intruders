@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Entities;
 using UnityEngine;
 
 namespace Environment
 {
     public class AsteroidGenerator : MonoBehaviour
     {
-        [SerializeField] private List<GameObject> _meteors;
+        [SerializeField] private List<Asteroid> _asteroids;
 
         [SerializeField] private int _amountToSpawn;
         [Space]
@@ -63,26 +64,27 @@ namespace Environment
             }
             else
             {
+                asteroid.SetMass();
+                asteroid.AddMovement();
                 return true;
             }
         }
 
-        private GameObject InstantiateAsteroid(Vector3 spawnPosition)
+        private Asteroid InstantiateAsteroid(Vector3 spawnPosition)
         {
-            var index = Random.Range(0, _meteors.Count);
+            var index = Random.Range(0, _asteroids.Count);
             var scale = Random.Range(_minScale, _maxScale);
 
-            var asteroid = Instantiate(_meteors[index], spawnPosition, Random.rotation, transform);
+            var asteroid = Instantiate(_asteroids[index], spawnPosition, Random.rotation, transform);
             asteroid.transform.localScale = new Vector3(scale, scale, scale);
             return asteroid;
         }
 
-        private bool IsAnotherAsteroidClose(Vector3 spawnPosition, GameObject asteroid)
+        private bool IsAnotherAsteroidClose(Vector3 spawnPosition, Asteroid asteroid)
         {
             var extents = (asteroid.transform.localScale / 2 ) * _distanceBetweenAsteroidMultiplier;
             var results = new Collider[5];
             var size = Physics.OverlapBoxNonAlloc(spawnPosition, extents, results);
-            Debug.Log(size);
 
             return size > 0;
         }
