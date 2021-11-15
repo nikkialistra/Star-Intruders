@@ -382,7 +382,8 @@ MonoBehaviour:
   _amountToSpawn: 300
   _minRange: 300
   _maxRange: 3600
-  _scaleRange: 8
+  _maxScale: 8
+  _distanceBetweenAsteroidMultiplier: 4
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
