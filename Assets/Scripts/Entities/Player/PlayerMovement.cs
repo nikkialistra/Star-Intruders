@@ -21,8 +21,6 @@ namespace Entities.Player
         [SerializeField] private float _rollAcceleration;
         [Space]
         [SerializeField] private float _accelerationMultiplier;
-        [Space]
-        [SerializeField] private float _moveThreshold;
 
         private float _currentForwardSpeed;
         private float _currentStrafeSpeed;
@@ -64,7 +62,7 @@ namespace Entities.Player
             ApplySpeed();
             ApplyRotation();
 
-            UpdateMoveAnimations();
+            UpdateMoveAnimations(moveInput);
         }
 
         private void CalculateSpeed(MoveInput moveInput)
@@ -105,9 +103,9 @@ namespace Entities.Player
             _rigidBody.MoveRotation(_rigidBody.rotation * Quaternion.Euler(rotation));
         }
 
-        private void UpdateMoveAnimations()
+        private void UpdateMoveAnimations(MoveInput moveInput)
         {
-            if (_rigidBody.velocity.magnitude > _moveThreshold)
+            if (moveInput.ForwardValue > 0)
             {
                 _playerAnimations.Move();
             }

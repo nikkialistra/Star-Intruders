@@ -6,6 +6,7 @@ namespace Core.Services
     {
         private void Awake()
         {
+            Cursor.lockState = CursorLockMode.Confined;
             Cursor.visible = false;
         }
     }
