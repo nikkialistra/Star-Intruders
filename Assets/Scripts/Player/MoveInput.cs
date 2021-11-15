@@ -9,5 +9,6 @@ namespace Player
         public float StrafeValue { get; set; }
         public float HoverValue { get; set; }
         public Vector2 LookPositionValue { get; set; }
+        public bool Accelerated { get; set; }
     }
 }

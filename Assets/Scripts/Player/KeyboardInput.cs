@@ -23,6 +23,7 @@ namespace Player
         private InputAction _hoverAction;
         private InputAction _rollAction;
         private InputAction _lookPositionAction;
+        private InputAction _accelerationAction;
         private InputAction _switchViewAction;
 
         private void Awake()
@@ -37,6 +38,7 @@ namespace Player
             _hoverAction = _input.actions.FindAction("Hover");
             _lookPositionAction = _input.actions.FindAction("LookPosition");
             _rollAction = _input.actions.FindAction("Roll");
+            _accelerationAction = _input.actions.FindAction("Acceleration");
             _switchViewAction = _input.actions.FindAction("SwitchView");
         }
 
@@ -68,6 +70,7 @@ namespace Player
             _moveInput.HoverValue = _hoverAction.ReadValue<float>();
             _moveInput.RollValue = _rollAction.ReadValue<float>();
             _moveInput.LookPositionValue = _lookPositionAction.ReadValue<Vector2>();
+            _moveInput.Accelerated = _accelerationAction.ReadValue<float>() > 0;
         }
 
         private void Move()

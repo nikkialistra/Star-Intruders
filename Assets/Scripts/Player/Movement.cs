@@ -19,19 +19,21 @@ namespace Player
         [SerializeField] private float _strafeAcceleration;
         [SerializeField] private float _hoverAcceleration;
         [SerializeField] private float _rollAcceleration;
-
-        [Header("Threshold")]
+        
+        [Space]
+        [SerializeField] private float _accelerationMultiplier;
+        [Space]
         [SerializeField] private float _moveThreshold;
 
         private float _currentForwardSpeed;
         private float _currentStrafeSpeed;
         private float _currentHoverSpeed;
-        
+
         private Vector2 _screenCenter;
         private Vector2 _lookOffset;
 
         private float _currentRoll;
-        
+
         private Rigidbody _rigidBody;
         private FlySwitching _flySwitching;
         private PlayerAnimations _playerAnimations;
@@ -68,7 +70,9 @@ namespace Player
 
         private void CalculateSpeed(MoveInput moveInput)
         {
-            _currentForwardSpeed = Mathf.Lerp(_currentForwardSpeed, moveInput.ForwardValue * _forwardSpeed,
+            var acceleration = moveInput.Accelerated ? _accelerationMultiplier : 1;
+            
+            _currentForwardSpeed = Mathf.Lerp(_currentForwardSpeed, moveInput.ForwardValue * _forwardSpeed * acceleration,
                 _forwardAcceleration * Time.fixedDeltaTime);
             _currentStrafeSpeed = Mathf.Lerp(_currentStrafeSpeed, moveInput.StrafeValue * _strafeSpeed,
                 _strafeAcceleration * Time.fixedDeltaTime);
