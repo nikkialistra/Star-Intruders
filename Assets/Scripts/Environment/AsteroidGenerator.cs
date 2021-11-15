@@ -31,7 +31,6 @@ namespace Environment
                     quantity++;
                 }
             }
-            
         }
     }
 }
