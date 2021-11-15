@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Entities;
 using UnityEngine;
 
-namespace Environment
+namespace Entities.Environment
 {
     public class AsteroidGenerator : MonoBehaviour
     {

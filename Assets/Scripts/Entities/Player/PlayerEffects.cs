@@ -1,8 +1,7 @@
-﻿using CameraControls;
-using Entities;
+﻿using Core.CameraControls;
 using UnityEngine;
 
-namespace Player
+namespace Entities.Player
 {
     [RequireComponent(typeof(ShakeCameraOffset))]
     public class PlayerEffects : MonoBehaviour

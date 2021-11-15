@@ -1,8 +1,8 @@
-﻿using CameraControls;
+﻿using Core.CameraControls;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace Entities.Player
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(FlySwitching))]

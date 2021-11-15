@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Services
+namespace Core.Services
 {
     public class CursorHiding : MonoBehaviour
     {

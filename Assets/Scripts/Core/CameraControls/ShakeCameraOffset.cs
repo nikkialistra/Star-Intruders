@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CameraControls
+namespace Core.CameraControls
 {
     public class ShakeCameraOffset : MonoBehaviour
     {

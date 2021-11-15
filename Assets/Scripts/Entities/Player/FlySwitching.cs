@@ -1,8 +1,7 @@
 using System.Collections;
-using Entities;
 using UnityEngine;
 
-namespace Player
+namespace Entities.Player
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(PlayerAnimations))]
