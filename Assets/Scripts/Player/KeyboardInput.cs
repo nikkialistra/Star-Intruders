@@ -6,7 +6,7 @@ namespace Player
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(FlySwitching))]
-    [RequireComponent(typeof(Movement))]
+    [RequireComponent(typeof(PlayerMovement))]
     [RequireComponent(typeof(CameraMovement))]
     public class KeyboardInput : MonoBehaviour
     {
@@ -15,7 +15,7 @@ namespace Player
         private PlayerInput _input;
         
         private FlySwitching _flySwitching;
-        private Movement _movement;
+        private PlayerMovement _playerMovement;
         private CameraMovement _cameraMovement;
 
         private InputAction _forwardAction;
@@ -30,7 +30,7 @@ namespace Player
         {
             _input = GetComponent<PlayerInput>();
             _flySwitching = GetComponent<FlySwitching>();
-            _movement = GetComponent<Movement>();
+            _playerMovement = GetComponent<PlayerMovement>();
             _cameraMovement = GetComponent<CameraMovement>();
             
             _forwardAction = _input.actions.FindAction("Forward");
@@ -75,7 +75,7 @@ namespace Player
 
         private void Move()
         {
-            _movement.Move(_moveInput);
+            _playerMovement.Move(_moveInput);
         }
 
         private void TryFlySwitch()

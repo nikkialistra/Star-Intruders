@@ -15,8 +15,6 @@ namespace Environment
         [Space]
         [SerializeField] private float _minScale;
         [SerializeField] private float _maxScale;
-        [Space]
-        [SerializeField] private float _distanceBetweenAsteroidMultiplier;
 
         private void Start()
         {
@@ -32,10 +30,8 @@ namespace Environment
 
                 if (IsPositionBeyondBase(spawnPosition))
                 {
-                    if (TryPlace(spawnPosition))
-                    {
-                        quantity++;
-                    }
+                    Place(spawnPosition);
+                    quantity++;
                 }
             }
         }
@@ -53,21 +49,11 @@ namespace Environment
             return spawnPosition.z > transform.position.z;
         }
 
-        private bool TryPlace(Vector3 spawnPosition)
+        private void Place(Vector3 spawnPosition)
         {
             var asteroid = InstantiateAsteroid(spawnPosition);
-
-            if (IsAnotherAsteroidClose(spawnPosition, asteroid))
-            {
-                Destroy(asteroid);
-                return false;
-            }
-            else
-            {
-                asteroid.SetMass();
-                asteroid.AddMovement();
-                return true;
-            }
+            asteroid.SetMass();
+            asteroid.AddMovement();
         }
 
         private Asteroid InstantiateAsteroid(Vector3 spawnPosition)
@@ -78,15 +64,6 @@ namespace Environment
             var asteroid = Instantiate(_asteroids[index], spawnPosition, Random.rotation, transform);
             asteroid.transform.localScale = new Vector3(scale, scale, scale);
             return asteroid;
-        }
-
-        private bool IsAnotherAsteroidClose(Vector3 spawnPosition, Asteroid asteroid)
-        {
-            var extents = (asteroid.transform.localScale / 2 ) * _distanceBetweenAsteroidMultiplier;
-            var results = new Collider[5];
-            var size = Physics.OverlapBoxNonAlloc(spawnPosition, extents, results);
-
-            return size > 0;
         }
     }
 }

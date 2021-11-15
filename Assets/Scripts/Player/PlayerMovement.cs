@@ -5,7 +5,7 @@ namespace Player
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(FlySwitching))]
     [RequireComponent(typeof(PlayerAnimations))]
-    public class Movement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour
     {
         [Header("Speed")]
         [SerializeField] private float _forwardSpeed;
@@ -19,7 +19,6 @@ namespace Player
         [SerializeField] private float _strafeAcceleration;
         [SerializeField] private float _hoverAcceleration;
         [SerializeField] private float _rollAcceleration;
-        
         [Space]
         [SerializeField] private float _accelerationMultiplier;
         [Space]
@@ -71,7 +70,7 @@ namespace Player
         private void CalculateSpeed(MoveInput moveInput)
         {
             var acceleration = moveInput.Accelerated ? _accelerationMultiplier : 1;
-            
+
             _currentForwardSpeed = Mathf.Lerp(_currentForwardSpeed, moveInput.ForwardValue * _forwardSpeed * acceleration,
                 _forwardAcceleration * Time.fixedDeltaTime);
             _currentStrafeSpeed = Mathf.Lerp(_currentStrafeSpeed, moveInput.StrafeValue * _strafeSpeed,

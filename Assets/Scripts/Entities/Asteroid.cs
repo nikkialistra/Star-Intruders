@@ -14,7 +14,6 @@ namespace Entities
         [Space] 
         [Range(0f, 1f)]
         [SerializeField] private float _chanceToMove;
-        
 
         private Rigidbody _rigidBody;
 
