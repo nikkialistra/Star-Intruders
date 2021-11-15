@@ -490,13 +490,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meteors:
-  - {fileID: 919132149155446097, guid: 5c3f33f965d013d4a82e94ed59b0cd70, type: 3}
-  - {fileID: 919132149155446097, guid: 4408d6a602f788b4091763c2b9bb5234, type: 3}
-  - {fileID: 919132149155446097, guid: ea76a60fd745be24ba3bb2f3740f3660, type: 3}
+  - {fileID: 345813608758854327, guid: 1fd6a2502059e0a489d590ab4a079957, type: 3}
+  - {fileID: 779876395034064389, guid: f0632d5b20925924a9dabeb524b5532a, type: 3}
+  - {fileID: 3161600352843894832, guid: c22156d50a9e43f4e97b7e1a1d101dac, type: 3}
+  - {fileID: 4535799173427383374, guid: 603327ce5467c244f8ceaa5a02e5f5f5, type: 3}
   _amountToSpawn: 300
   _minRange: 300
   _maxRange: 3600
-  _scaleRange: 50
+  _scaleRange: 8
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +528,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -763,7 +764,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: a4b33bec41a032b44b8808261c6843fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1027,10 +1028,8 @@ MonoBehaviour:
   - {fileID: 911400102}
   - {fileID: 923877396}
   - {fileID: 2142920604}
-  _enabledEngine: {fileID: 3225888731022386735, guid: 2f354ba09badf854495f8f2c38e72bb3,
-    type: 3}
-  _disabledEngine: {fileID: -6004751174935338280, guid: 2f354ba09badf854495f8f2c38e72bb3,
-    type: 3}
+  _enabledEngine: {fileID: 2100000, guid: fdec48bee86b09d4b9eebb421cdbfd6c, type: 2}
+  _disabledEngine: {fileID: 2100000, guid: f75a96ea6c1281547a07439c7f622737, type: 2}
 --- !u!1001 &1015138023
 PrefabInstance:
   m_ObjectHideFlags: 0

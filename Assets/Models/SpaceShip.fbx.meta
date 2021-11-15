@@ -27,7 +27,47 @@ ModelImporter:
   - first:
       74: -1582630358074644568
     second: DisabledEngineMaterial|PlaneAction
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: d0c5d04909f83fd41a7dcea7e1456cd9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DisabledEngine
+    second: {fileID: 2100000, guid: f75a96ea6c1281547a07439c7f622737, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EnabledEngine
+    second: {fileID: 2100000, guid: fdec48bee86b09d4b9eebb421cdbfd6c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: f6e7d1aa4dc11ae4c8fbfc8dd2c8964b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SideEngines
+    second: {fileID: 2100000, guid: c0d6f5c08ed0876479a608fd7db8be01, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stand
+    second: {fileID: 2100000, guid: 7388beb7f8b1e8045b29f08f53f55fcb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: WingEnds
+    second: {fileID: 2100000, guid: 9119471b7bd7cbf4b84ac271874393f8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wings
+    second: {fileID: 2100000, guid: a666ec90e85f21d4289bf6c3d620385f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
