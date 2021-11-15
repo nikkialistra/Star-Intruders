@@ -8,9 +8,13 @@ namespace Environment
         [SerializeField] private List<GameObject> _meteors;
 
         [SerializeField] private int _amountToSpawn;
+        [Space]
         [SerializeField] private float _minRange;
         [SerializeField] private float _maxRange;
+        [Space]
+        [SerializeField] private float _minScale;
         [SerializeField] private float _maxScale;
+        [Space]
         [SerializeField] private float _distanceBetweenAsteroidMultiplier;
 
         private void Start()
@@ -66,7 +70,7 @@ namespace Environment
         private GameObject InstantiateAsteroid(Vector3 spawnPosition)
         {
             var index = Random.Range(0, _meteors.Count);
-            var scale = Random.Range(1, _maxScale);
+            var scale = Random.Range(_minScale, _maxScale);
 
             var asteroid = Instantiate(_meteors[index], spawnPosition, Random.rotation, transform);
             asteroid.transform.localScale = new Vector3(scale, scale, scale);
@@ -75,15 +79,12 @@ namespace Environment
 
         private bool IsAnotherAsteroidClose(Vector3 spawnPosition, GameObject asteroid)
         {
-            var boxBounds = new Bounds(spawnPosition, asteroid.GetComponent<MeshCollider>().bounds.size);
-            var sqrHalfBoxSize = boxBounds.extents.sqrMagnitude;
-            var overlappingSphereRadius = Mathf.Sqrt(sqrHalfBoxSize + sqrHalfBoxSize);
-            var checkedDistance = overlappingSphereRadius * _distanceBetweenAsteroidMultiplier;
-
+            var extents = (asteroid.transform.localScale / 2 ) * _distanceBetweenAsteroidMultiplier;
             var results = new Collider[5];
-            var size = Physics.OverlapSphereNonAlloc(spawnPosition, checkedDistance, results);
+            var size = Physics.OverlapBoxNonAlloc(spawnPosition, extents, results);
+            Debug.Log(size);
 
-            return size > 1;
+            return size > 0;
         }
     }
 }

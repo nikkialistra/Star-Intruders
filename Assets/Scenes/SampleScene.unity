@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118022031}
   m_LocalRotation: {x: 0.12186928, y: 0, z: 0, w: 0.9925462}
-  m_LocalPosition: {x: 0, y: 4, z: -12}
+  m_LocalPosition: {x: 0, y: 4, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -382,7 +382,8 @@ MonoBehaviour:
   _amountToSpawn: 300
   _minRange: 300
   _maxRange: 3600
-  _maxScale: 8
+  _minScale: 2
+  _maxScale: 7
   _distanceBetweenAsteroidMultiplier: 4
 --- !u!1 &410087039
 GameObject:
@@ -835,6 +836,7 @@ MonoBehaviour:
   _strafeAcceleration: 2
   _hoverAcceleration: 2
   _rollAcceleration: 3.5
+  _accelerationMultiplier: 2.5
   _moveThreshold: 14
 --- !u!54 &928780818
 Rigidbody:
@@ -867,7 +869,7 @@ MonoBehaviour:
   _cameraTransform: {fileID: 330585546}
   _chasePoint: {fileID: 118022032}
   _cockpitPoint: {fileID: 441591886}
-  _moveSpeed: 18
+  _moveSpeed: 22
   _rotateSpeed: 4
 --- !u!114 &928780822
 MonoBehaviour:

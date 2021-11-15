@@ -11,9 +11,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: -489777358525527979, guid: d4a634071392b004ea521e5bef378a6a, type: 3}
+  m_Mesh: {fileID: 515073571183059854, guid: f70daa1d7c3858f47ac4b3960c02df3e, type: 3}
 --- !u!1001 &3617248673574646047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29,17 +29,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: d4a634071392b004ea521e5bef378a6a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5.81604
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4a634071392b004ea521e5bef378a6a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 11.630693
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4a634071392b004ea521e5bef378a6a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -30.209206
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d4a634071392b004ea521e5bef378a6a,
         type: 3}
@@ -79,7 +79,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d4a634071392b004ea521e5bef378a6a,
         type: 3}
       propertyPath: m_Name
-      value: Asteroid4
+      value: Asteroid4WithCollider
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4a634071392b004ea521e5bef378a6a, type: 3}
