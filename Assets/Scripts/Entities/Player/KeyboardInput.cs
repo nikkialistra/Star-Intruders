@@ -1,4 +1,5 @@
 ﻿using Core.CameraControls;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,8 @@ namespace Entities.Player
     [RequireComponent(typeof(CameraMovement))]
     public class KeyboardInput : MonoBehaviour
     {
+        [SerializeField] private TargetCursor _targetCursor;
+
         private readonly MoveInput _moveInput = new MoveInput();
         
         private PlayerInput _input;
@@ -45,6 +48,7 @@ namespace Entities.Player
         private void Update()
         {
             ReadMovementActions();
+            UpdateTargetCursor();
         }
 
         private void FixedUpdate()
@@ -71,6 +75,11 @@ namespace Entities.Player
             _moveInput.RollValue = _rollAction.ReadValue<float>();
             _moveInput.LookPositionValue = _lookPositionAction.ReadValue<Vector2>();
             _moveInput.Accelerated = _accelerationAction.ReadValue<float>() > 0;
+        }
+
+        private void UpdateTargetCursor()
+        {
+            _targetCursor.UpdatePosition(_lookPositionAction.ReadValue<Vector2>());
         }
 
         private void Move()
