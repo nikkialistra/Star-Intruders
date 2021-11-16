@@ -1,5 +1,4 @@
 ﻿using Core.CameraControls;
-using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,10 +8,9 @@ namespace Entities.Player
     [RequireComponent(typeof(FlySwitching))]
     [RequireComponent(typeof(PlayerMovement))]
     [RequireComponent(typeof(CameraMovement))]
+    [RequireComponent(typeof(Targeting))]
     public class KeyboardInput : MonoBehaviour
     {
-        [SerializeField] private TargetCursor _targetCursor;
-
         private readonly MoveInput _moveInput = new MoveInput();
         
         private PlayerInput _input;
@@ -20,6 +18,7 @@ namespace Entities.Player
         private FlySwitching _flySwitching;
         private PlayerMovement _playerMovement;
         private CameraMovement _cameraMovement;
+        private Targeting _targeting;
 
         private InputAction _forwardAction;
         private InputAction _strafeAction;
@@ -35,6 +34,7 @@ namespace Entities.Player
             _flySwitching = GetComponent<FlySwitching>();
             _playerMovement = GetComponent<PlayerMovement>();
             _cameraMovement = GetComponent<CameraMovement>();
+            _targeting = GetComponent<Targeting>();
             
             _forwardAction = _input.actions.FindAction("Forward");
             _strafeAction = _input.actions.FindAction("Strafe");
@@ -79,7 +79,7 @@ namespace Entities.Player
 
         private void UpdateTargetCursor()
         {
-            _targetCursor.UpdatePosition(_lookPositionAction.ReadValue<Vector2>());
+            _targeting.UpdateFromInput(_lookPositionAction.ReadValue<Vector2>());
         }
 
         private void Move()

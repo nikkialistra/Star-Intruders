@@ -1,4 +1,5 @@
 using System.Collections;
+using Entities.Types;
 using UnityEngine;
 
 namespace Entities.Player

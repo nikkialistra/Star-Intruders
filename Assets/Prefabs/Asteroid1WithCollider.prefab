@@ -47,6 +47,18 @@ MonoBehaviour:
   _minThrust: 1
   _maxThrust: 2
   _chanceToMove: 0.8
+--- !u!114 &-3208556249862327125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345813608758854327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04148abde62a4087a00f742bd6aa2f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &580395307294818278
 PrefabInstance:
   m_ObjectHideFlags: 0

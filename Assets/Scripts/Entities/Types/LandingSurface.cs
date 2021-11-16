@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Entities
+namespace Entities.Types
 {
     public class LandingSurface : MonoBehaviour
     {
