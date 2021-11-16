@@ -10,7 +10,8 @@ namespace Entities.Player
         [SerializeField] private TargetIcon _targetIcon;
         [Space]
         [SerializeField] private Camera _camera;
-        [Space]
+        [Space] 
+        [SerializeField] private float _raycastRadius;
         [SerializeField] private float _maxDistanceToTarget;
 
         public void UpdateFromInput(Vector2 mousePosition)
@@ -22,7 +23,7 @@ namespace Entities.Player
         private void SearchForTarget(Vector2 viewportPosition)
         {
             var ray = _camera.ScreenPointToRay(viewportPosition);
-            if (Physics.Raycast (ray, out var hit, _maxDistanceToTarget)) {
+            if (Physics.SphereCast(ray, _raycastRadius, out var hit, _maxDistanceToTarget)) {
                 if (hit.transform.TryGetComponent(out Targetable targetable))
                 {
                     _targetIcon.SetTarget(targetable.transform);
