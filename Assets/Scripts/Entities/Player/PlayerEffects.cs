@@ -3,20 +3,14 @@ using UnityEngine;
 
 namespace Entities.Player
 {
-    [RequireComponent(typeof(ShakeCameraOffset))]
     public class PlayerEffects : MonoBehaviour
     {
         [SerializeField] private float _shakeOnAsteroidCollision;
-        
-        private ShakeCameraOffset _shakeCameraOffset;
+
+        [SerializeField] private ShakeCameraOffset _shakeCameraOffset;
 
         private bool _isShook;
-
-        private void Awake()
-        {
-            _shakeCameraOffset = GetComponent<ShakeCameraOffset>();
-        }
-
+        
         private void OnCollisionEnter(Collision other)
         {
             if (other.gameObject.GetComponent<Asteroid>() != null)

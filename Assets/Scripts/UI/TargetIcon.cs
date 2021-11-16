@@ -18,7 +18,7 @@ namespace UI
             _target = target;
             _hasTarget = true;
         }
-
+    
         public void UnsetTarget()
         {
             _hasTarget = false;

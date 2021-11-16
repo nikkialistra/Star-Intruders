@@ -5,14 +5,14 @@ namespace Core.CameraControls
     [RequireComponent(typeof(ShakeCameraOffset))]
     public class CameraMovement : MonoBehaviour
     {
-        [SerializeField] private Transform _cameraTransform;
-        
         [SerializeField] private Transform _chasePoint;
         [SerializeField] private Transform _cockpitPoint;
 
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotateSpeed;
-        
+
+        [SerializeField] private Camera _overlayCamera;
+
         private bool _isChasing = true;
         
         private bool _switchingFinished;
@@ -29,6 +29,12 @@ namespace Core.CameraControls
             SubtractLastShake();
             MoveCamera();
             AddNewShake();
+            UpdateOverlayCameraTransform();
+        }
+
+        public void SwitchView()
+        {
+            _isChasing = !_isChasing;
         }
 
         private void MoveCamera()
@@ -45,16 +51,16 @@ namespace Core.CameraControls
 
         private void MoveToChasePoint()
         {
-            _cameraTransform.position =
-                Vector3.Lerp(_cameraTransform.position, _chasePoint.position, _moveSpeed * Time.deltaTime);
-            _cameraTransform.rotation =
-                Quaternion.Lerp(_cameraTransform.rotation, _chasePoint.rotation, _rotateSpeed * Time.deltaTime);
+            transform.position =
+                Vector3.Lerp(transform.position, _chasePoint.position, _moveSpeed * Time.deltaTime);
+            transform.rotation =
+                Quaternion.Lerp(transform.rotation, _chasePoint.rotation, _rotateSpeed * Time.deltaTime);
         }
 
         private void MoveToCockpitPoint()
         {
-            _cameraTransform.position = _cockpitPoint.position;
-            _cameraTransform.rotation = _cockpitPoint.rotation;
+            transform.position = _cockpitPoint.position;
+            transform.rotation = _cockpitPoint.rotation;
 
         }
 
@@ -68,9 +74,10 @@ namespace Core.CameraControls
             transform.position += _shakeCameraOffset.CurrentValue;
         }
 
-        public void SwitchView()
+        private void UpdateOverlayCameraTransform()
         {
-            _isChasing = !_isChasing;
+            _overlayCamera.transform.position = transform.position;
+            _overlayCamera.transform.rotation = transform.rotation;
         }
     }
 }

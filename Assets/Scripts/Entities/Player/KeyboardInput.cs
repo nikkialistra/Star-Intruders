@@ -7,17 +7,17 @@ namespace Entities.Player
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(FlySwitching))]
     [RequireComponent(typeof(PlayerMovement))]
-    [RequireComponent(typeof(CameraMovement))]
     [RequireComponent(typeof(Targeting))]
     public class KeyboardInput : MonoBehaviour
     {
+        [SerializeField] private CameraMovement _cameraMovement;
+
         private readonly MoveInput _moveInput = new MoveInput();
         
         private PlayerInput _input;
         
         private FlySwitching _flySwitching;
         private PlayerMovement _playerMovement;
-        private CameraMovement _cameraMovement;
         private Targeting _targeting;
 
         private InputAction _forwardAction;
@@ -33,7 +33,6 @@ namespace Entities.Player
             _input = GetComponent<PlayerInput>();
             _flySwitching = GetComponent<FlySwitching>();
             _playerMovement = GetComponent<PlayerMovement>();
-            _cameraMovement = GetComponent<CameraMovement>();
             _targeting = GetComponent<Targeting>();
             
             _forwardAction = _input.actions.FindAction("Forward");
