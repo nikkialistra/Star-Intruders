@@ -10,7 +10,8 @@ namespace Entities.Shooting
         
         [Header("Bullet")]
         [SerializeField] private Bullet _bullet;
-        
+        [SerializeField] private Transform _bulletsParent;
+
         [Header("Parameters")]
         [SerializeField] private float _rechargeTime;
         [SerializeField] private float _lifetime;
@@ -34,23 +35,27 @@ namespace Entities.Shooting
         {
             if (IsRechargeFinished())
             {
-                var bullet = Instantiate(_bullet, _activeMuzzle.transform.position, Quaternion.identity);
-                bullet.Initialize(_lifetime, _damage, _moveSpeed, direction);
+                CalculateNextRecharge();
+                CreateBullet(direction);
                 SwitchMuzzle();
             }
         }
 
+        private void CreateBullet(Vector3 direction)
+        {
+            var bullet = Instantiate(_bullet, _activeMuzzle.transform.position, Quaternion.LookRotation(direction),
+                _bulletsParent);
+            bullet.Initialize(_lifetime, _damage, _moveSpeed, direction);
+        }
+
         private bool IsRechargeFinished()
         {
-            if (Time.time > _nextShootTime)
-            {
-                _nextShootTime += _rechargeTime;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return Time.time > _nextShootTime;
+        }
+
+        private void CalculateNextRecharge()
+        {
+            _nextShootTime = Time.time + _rechargeTime;
         }
 
         private void SwitchMuzzle()

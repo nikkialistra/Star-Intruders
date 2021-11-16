@@ -53,6 +53,7 @@ namespace Entities.Player
         {
             ReadMovementActions();
             UpdateTargetCursor();
+            ReadShootingActions();
         }
 
         private void FixedUpdate()
@@ -64,13 +65,11 @@ namespace Entities.Player
         private void OnEnable()
         {
             _switchViewAction.started += SwitchView;
-            _shootAction.started += Shoot;
         }
 
         private void OnDisable()
         {
             _switchViewAction.started -= SwitchView;
-            _shootAction.started -= Shoot;
         }
 
         private void ReadMovementActions()
@@ -109,9 +108,12 @@ namespace Entities.Player
             _cameraMovement.SwitchView();
         }
 
-        private void Shoot(InputAction.CallbackContext context)
+        private void ReadShootingActions()
         {
-            _playerShooting.Shoot(_lookPositionAction.ReadValue<Vector2>());
+            if (_shootAction.ReadValue<float>() > 0)
+            {
+                _playerShooting.Shoot(_lookPositionAction.ReadValue<Vector2>());
+            }
         }
     }
 }
