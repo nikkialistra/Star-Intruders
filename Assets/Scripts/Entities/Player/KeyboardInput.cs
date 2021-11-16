@@ -8,6 +8,7 @@ namespace Entities.Player
     [RequireComponent(typeof(FlySwitching))]
     [RequireComponent(typeof(PlayerMovement))]
     [RequireComponent(typeof(Targeting))]
+    [RequireComponent(typeof(PlayerShooting))]
     public class KeyboardInput : MonoBehaviour
     {
         [SerializeField] private CameraMovement _cameraMovement;
@@ -19,6 +20,7 @@ namespace Entities.Player
         private FlySwitching _flySwitching;
         private PlayerMovement _playerMovement;
         private Targeting _targeting;
+        private PlayerShooting _playerShooting;
 
         private InputAction _forwardAction;
         private InputAction _strafeAction;
@@ -27,6 +29,7 @@ namespace Entities.Player
         private InputAction _lookPositionAction;
         private InputAction _accelerationAction;
         private InputAction _switchViewAction;
+        private InputAction _shootAction;
 
         private void Awake()
         {
@@ -34,6 +37,7 @@ namespace Entities.Player
             _flySwitching = GetComponent<FlySwitching>();
             _playerMovement = GetComponent<PlayerMovement>();
             _targeting = GetComponent<Targeting>();
+            _playerShooting = GetComponent<PlayerShooting>();
             
             _forwardAction = _input.actions.FindAction("Forward");
             _strafeAction = _input.actions.FindAction("Strafe");
@@ -42,6 +46,7 @@ namespace Entities.Player
             _rollAction = _input.actions.FindAction("Roll");
             _accelerationAction = _input.actions.FindAction("Acceleration");
             _switchViewAction = _input.actions.FindAction("SwitchView");
+            _shootAction = _input.actions.FindAction("Shoot");
         }
 
         private void Update()
@@ -59,11 +64,13 @@ namespace Entities.Player
         private void OnEnable()
         {
             _switchViewAction.started += SwitchView;
+            _shootAction.started += Shoot;
         }
 
         private void OnDisable()
         {
             _switchViewAction.started -= SwitchView;
+            _shootAction.started -= Shoot;
         }
 
         private void ReadMovementActions()
@@ -100,6 +107,11 @@ namespace Entities.Player
         private void SwitchView(InputAction.CallbackContext context)
         {
             _cameraMovement.SwitchView();
+        }
+
+        private void Shoot(InputAction.CallbackContext context)
+        {
+            _playerShooting.Shoot(_lookPositionAction.ReadValue<Vector2>());
         }
     }
 }

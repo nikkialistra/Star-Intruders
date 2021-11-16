@@ -2,11 +2,11 @@
 
 namespace Entities.Shooting
 {
-    public class TwinsCannon : MonoBehaviour, ICannon
+    public class TwinsCannon : Cannon
     {
         [Header("Muzzles")]
-        [SerializeField] private Transform _firstMuzzle;
-        [SerializeField] private Transform _secondMuzzle;
+        [SerializeField] private Transform _leftMuzzle;
+        [SerializeField] private Transform _rightMuzzle;
         
         [Header("Bullet")]
         [SerializeField] private Bullet _bullet;
@@ -22,15 +22,20 @@ namespace Entities.Shooting
 
         private void Start()
         {
-            _activeMuzzle = _firstMuzzle;
+            _activeMuzzle = _leftMuzzle;
         }
 
-        public void Shoot(Vector3 direction)
+        public override Vector3 GetMuzzlePosition()
+        {
+            return _activeMuzzle.transform.position;
+        }
+
+        public override void Shoot(Vector3 direction)
         {
             if (IsRechargeFinished())
             {
-                Instantiate(_bullet, _activeMuzzle.transform.position, Quaternion.identity);
-                _bullet.Initialize(_lifetime, _damage, _moveSpeed, direction);
+                var bullet = Instantiate(_bullet, _activeMuzzle.transform.position, Quaternion.identity);
+                bullet.Initialize(_lifetime, _damage, _moveSpeed, direction);
                 SwitchMuzzle();
             }
         }
@@ -50,13 +55,13 @@ namespace Entities.Shooting
 
         private void SwitchMuzzle()
         {
-            if (_activeMuzzle == _firstMuzzle)
+            if (_activeMuzzle == _leftMuzzle)
             {
-                _activeMuzzle = _secondMuzzle;
+                _activeMuzzle = _rightMuzzle;
             }
             else
             {
-                _activeMuzzle = _firstMuzzle;
+                _activeMuzzle = _leftMuzzle;
             }
         }
     }
