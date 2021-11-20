@@ -1,13 +1,21 @@
 ﻿using Entities.Shooting;
 using UnityEngine;
+using Zenject;
 
 namespace Entities.Player
 {
     public class PlayerShooting : MonoBehaviour
     {
-        [SerializeReference] private Cannon _cannon;
+        private Cannon _cannon;
 
-        [SerializeField] private Camera _camera;
+        private Camera _camera;
+
+        [Inject]
+        public void Construct(Camera camera, Cannon cannon)
+        {
+            _camera = camera;
+            _cannon = cannon;
+        }
 
         public void Shoot(Vector2 position)
         {

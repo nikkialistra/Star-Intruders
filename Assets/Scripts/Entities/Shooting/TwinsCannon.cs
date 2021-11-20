@@ -4,16 +4,15 @@ namespace Entities.Shooting
 {
     public class TwinsCannon : Cannon
     {
-        [Header("Muzzles")]
-        [SerializeField] private Transform _leftMuzzle;
+        [Header("Muzzles")] [SerializeField] private Transform _leftMuzzle;
         [SerializeField] private Transform _rightMuzzle;
-        
-        [Header("Bullet")]
-        [SerializeField] private Bullet _bullet;
+
+        [Header("Bullet")] [SerializeField] private Bullet _bullet;
         [SerializeField] private Transform _bulletsParent;
 
-        [Header("Parameters")]
-        [SerializeField] private float _rechargeTime;
+        [Header("Parameters")] [SerializeField]
+        private float _rechargeTime;
+
         [SerializeField] private float _lifetime;
         [SerializeField] private float _damage;
         [SerializeField] private float _moveSpeed;

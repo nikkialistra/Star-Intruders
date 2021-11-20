@@ -1,6 +1,7 @@
 ﻿using Entities.Types;
 using UI;
 using UnityEngine;
+using Zenject;
 
 namespace Entities.Player
 {
@@ -9,10 +10,16 @@ namespace Entities.Player
         [SerializeField] private TargetCursor _targetCursor;
         [SerializeField] private TargetIcon _targetIcon;
         [Space]
-        [SerializeField] private Camera _camera;
-        [Space] 
         [SerializeField] private float _raycastRadius;
         [SerializeField] private float _maxDistanceToTarget;
+        
+        private Camera _camera;
+
+        [Inject]
+        public void Construct(Camera camera)
+        {
+            _camera = camera;
+        }
 
         public void UpdateFromInput(Vector2 mousePosition)
         {

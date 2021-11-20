@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace UI
 {
@@ -6,12 +7,17 @@ namespace UI
     {
         [SerializeField] private Canvas _canvasWithIcon;
         [Space]
-        [SerializeField] private Camera _camera;
-        
+        private Camera _camera;
 
         private bool _hasTarget;
 
         private Transform _target;
+
+        [Inject]
+        public void Construct(Camera camera)
+        {
+            _camera = camera;
+        }
 
         public void SetTarget(Transform target)
         {
