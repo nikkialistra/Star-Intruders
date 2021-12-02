@@ -1,13 +1,16 @@
-﻿using Game.Shooting.Cannons.Scripts;
+﻿using Game.Cameras.Scripts;
+using Game.Shooting.Cannons.Scripts;
 using UnityEngine;
 using Zenject;
 
-namespace Kernel.Infrastructure
+namespace Infrastructure
 {
     public class SceneInstaller : MonoInstaller
     {
-        [Header("Scene")]
+        [Header("Cameras")]
         [SerializeField] private Camera _mainCamera;
+        [SerializeField] private ShakeCameraOffset _shakeCameraOffset;
+        
 
         [Header("Shooting")]
         [SerializeField] private Cannon _cannon;
@@ -15,14 +18,14 @@ namespace Kernel.Infrastructure
 
         public override void InstallBindings()
         {
-            BindScene();
-
+            BindCameras();
             BindShooting();
         }
 
-        private void BindScene()
+        private void BindCameras()
         {
             Container.BindInstance(_mainCamera);
+            Container.BindInstance(_shakeCameraOffset);
         }
 
         private void BindShooting()

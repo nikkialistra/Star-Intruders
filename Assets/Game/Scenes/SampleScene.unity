@@ -300,12 +300,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 4713164516471511786}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &719972834 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2444480337970646450, guid: 2f43247b707fb9040bf1d043042e438c,
-    type: 3}
-  m_PrefabInstance: {fileID: 4713164516471511786}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &928780813 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4713164517257677031, guid: 2f43247b707fb9040bf1d043042e438c,
@@ -570,6 +564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 330585545}
+  _shakeCameraOffset: {fileID: 330585549}
   _cannon: {fileID: 1886360746}
 --- !u!114 &2066147695
 MonoBehaviour:
@@ -779,16 +774,6 @@ PrefabInstance:
       propertyPath: _targetCursor
       value: 
       objectReference: {fileID: 212583727}
-    - target: {fileID: 4713164517257677041, guid: 2f43247b707fb9040bf1d043042e438c,
-        type: 3}
-      propertyPath: _cannonPoint
-      value: 
-      objectReference: {fileID: 719972834}
-    - target: {fileID: 4713164517257677043, guid: 2f43247b707fb9040bf1d043042e438c,
-        type: 3}
-      propertyPath: _shakeCameraOffset
-      value: 
-      objectReference: {fileID: 330585549}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f43247b707fb9040bf1d043042e438c, type: 3}
 --- !u!1001 &5871028374356866750

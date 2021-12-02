@@ -1,6 +1,7 @@
 ﻿using Game.Cameras.Scripts;
 using Game.Environment.Asteroids;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Player.Scripts
 {
@@ -8,9 +9,15 @@ namespace Game.Player.Scripts
     {
         [SerializeField] private float _shakeOnAsteroidCollision;
 
-        [SerializeField] private ShakeCameraOffset _shakeCameraOffset;
+        private ShakeCameraOffset _shakeCameraOffset;
 
         private bool _isShook;
+
+        [Inject]
+        public void Construct(ShakeCameraOffset shakeCameraOffset)
+        {
+            _shakeCameraOffset = shakeCameraOffset;
+        }
         
         private void OnCollisionEnter(Collision other)
         {

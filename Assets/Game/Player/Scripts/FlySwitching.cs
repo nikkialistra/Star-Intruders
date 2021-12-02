@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using Kernel.Types;
 using UnityEngine;
 
@@ -14,8 +15,10 @@ namespace Game.Player.Scripts
         [SerializeField] private bool _landed;
         [SerializeField] private float _landingDistance;
         [SerializeField] private float _landingRotateSpeed;
+        [SerializeField] private float _minimumLandingRotateSpeedDuration;
         [SerializeField] private float _landingSpeed;
-        
+        [SerializeField] private float _minimumLandingSpeedDuration;
+
         [Header("Takeoff")] 
         [SerializeField] private float _takeOffAltitude;
         [SerializeField] private float _takeoffSpeed;
@@ -87,14 +90,10 @@ namespace Game.Player.Scripts
 
         private IEnumerator RotateSpaceShipToLandingAngle()
         {
-            while (!ApproximatelyEqual())
-            {
-                var currentRotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(_landingAngle), 
-                    _landingRotateSpeed * Time.fixedDeltaTime);
-                _rigidBody.rotation = currentRotation;
+            var duration = GetRotationDuration();
+            
+            yield return _rigidBody.DORotate(_landingAngle, duration).WaitForCompletion();
 
-                yield return new WaitForFixedUpdate();
-            }
             _landingAnimation = StartCoroutine(LandSpaceShipToSurface());
         }
 
@@ -103,34 +102,57 @@ namespace Game.Player.Scripts
             var closestPointToLandingSurface = GetClosestPointToLandingSurface();
 
             var distanceToLand = Vector3.Distance(_spaceShipBottomPoint.position, closestPointToLandingSurface);
-            var directionToLand = (closestPointToLandingSurface - _spaceShipBottomPoint.position).normalized;
-            
-            var passedDistance = 0f;
-            Vector3 deltaMove;
-            
-            while (passedDistance < distanceToLand)
-            {
-                deltaMove = directionToLand * (_landingSpeed * Time.fixedDeltaTime);
-                _rigidBody.MovePosition(_rigidBody.position + deltaMove);
-                passedDistance += deltaMove.magnitude;
+            var duration = GetDuration(distanceToLand, _landingSpeed, _minimumLandingSpeedDuration);
 
-                yield return new WaitForFixedUpdate();
-            }
-            
+            var targetPosition = GetTargetPosition(closestPointToLandingSurface, distanceToLand);
+
+            yield return _rigidBody.DOMove(targetPosition, duration).WaitForCompletion();
+
             yield return new WaitForSeconds(_timeToTurnOffEngines);
             _playerAnimations.TurnOffEngines();
+        }
+
+        private Vector3 GetTargetPosition(Vector3 closestPointToLandingSurface, float distanceToLand)
+        {
+            var directionToLand = (closestPointToLandingSurface - _spaceShipBottomPoint.position).normalized;
+            var targetPosition = transform.position + directionToLand * distanceToLand;
+            return targetPosition;
+        }
+
+        private float GetRotationDuration()
+        {
+            var angleDifference = GetAngleDifference(transform.rotation.eulerAngles, _landingAngle);
+            var duration = GetDuration(angleDifference, _landingRotateSpeed, _minimumLandingRotateSpeedDuration);
+            return duration;
+        }
+
+        private float GetAngleDifference(Vector3 firstAngle, Vector3 secondAngle)
+        {
+            var xDifference = GetAngleDifferenceOnAxis(firstAngle.x, secondAngle.x);
+            var zDifference = GetAngleDifferenceOnAxis(firstAngle.z, secondAngle.z);
+            
+            return xDifference + zDifference;
+        }
+
+        private static float GetAngleDifferenceOnAxis(float firstAngle, float secondAngle)
+        {
+            var difference = firstAngle - secondAngle;
+            if (difference > 180)
+            {
+                difference -= 360;
+            }
+            if (difference < -180)
+            {
+                difference += 360;
+            }
+
+            return Mathf.Abs(difference);
         }
 
         private Vector3 GetClosestPointToLandingSurface()
         {
             var landingSurfaceCollider = _landingSurface.GetComponent<Collider>();
             return landingSurfaceCollider.ClosestPoint(_spaceShipBottomPoint.position);
-        }
-
-        private bool ApproximatelyEqual()
-        {
-            // If the difference is less than 1 degree
-            return Mathf.Abs(Quaternion.Dot(_rigidBody.rotation, Quaternion.Euler(_landingAngle))) >= 0.9999619;
         }
 
         public void TryTakeoff()
@@ -159,21 +181,21 @@ namespace Game.Player.Scripts
         private IEnumerator GainAltitude()
         {
             var directionToTakeoff = _rigidBody.transform.up;
-            
-            var passedDistance = 0f;
-            Vector3 deltaMove;
-            
-            while (passedDistance < _takeOffAltitude)
-            {
-                deltaMove = directionToTakeoff * (_takeoffSpeed * Time.fixedDeltaTime);
-                _rigidBody.MovePosition(_rigidBody.position + deltaMove);
-                passedDistance += deltaMove.magnitude;
+            var duration = GetDuration(_takeOffAltitude, _takeoffSpeed);
 
-                yield return new WaitForFixedUpdate();
-            }
-            
+            var targetPosition = transform.position + directionToTakeoff * _takeOffAltitude;
+
+            yield return _rigidBody.DOMove(targetPosition, duration).WaitForCompletion();
+
             _rigidBody.isKinematic = false;
             CanFly = true;
+        }
+
+        private float GetDuration(float value, float speed, float minimumValue = Mathf.NegativeInfinity)
+        {
+            var duration = value / speed;
+            duration = Mathf.Max(duration, minimumValue);
+            return duration;
         }
     }
 }
