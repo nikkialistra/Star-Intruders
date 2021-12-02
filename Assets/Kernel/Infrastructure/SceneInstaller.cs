@@ -1,4 +1,4 @@
-﻿using Kernel.Shooting;
+﻿using Game.Shooting.Cannons.Scripts;
 using UnityEngine;
 using Zenject;
 
