@@ -14,23 +14,28 @@ namespace Game.Player.Scripts
         
         [Title("Landing")]
         [SerializeField] private bool _landed;
+        [MinValue(0)]
         [SerializeField] private float _landingDistance;
+        [MinValue(0)]
         [SerializeField] private float _landingRotateSpeed;
+        [MinValue(0)]
         [SerializeField] private float _minimumLandingRotateSpeedDuration;
+        [MinValue(0)]
         [SerializeField] private float _landingSpeed;
+        [MinValue(0)]
         [SerializeField] private float _minimumLandingSpeedDuration;
 
-        [Title("Takeoff")] 
+        [Title("Takeoff"), MinValue(0)] 
         [SerializeField] private float _takeOffAltitude;
+        [MinValue(0)]
         [SerializeField] private float _takeoffSpeed;
 
-        [Title("Transform")]
-        [InlineEditor(InlineEditorObjectFieldModes.Boxed)]
+        [Title("Transform"), InlineEditor, Required]
         [SerializeField] private Transform _spaceShipBottomPoint;
 
+        [Title("Animations"), MinValue(0)]
         [SerializeField] private float _timeToTurnOffEngines;
-        
-        
+
         private Rigidbody _rigidBody;
         private PlayerAnimations _playerAnimations;
         

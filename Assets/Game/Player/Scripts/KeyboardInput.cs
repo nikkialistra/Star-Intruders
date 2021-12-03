@@ -2,6 +2,7 @@
 using Kernel.Controls;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Game.Player.Scripts
 {
@@ -12,7 +13,7 @@ namespace Game.Player.Scripts
     [RequireComponent(typeof(PlayerShooting))]
     public class KeyboardInput : MonoBehaviour
     {
-        [SerializeField] private CameraMovement _cameraMovement;
+        private CameraMovement _cameraMovement;
 
         private readonly MoveInput _moveInput = new MoveInput();
         
@@ -31,6 +32,12 @@ namespace Game.Player.Scripts
         private InputAction _accelerationAction;
         private InputAction _switchViewAction;
         private InputAction _shootAction;
+
+        [Inject]
+        public void Construct(CameraMovement cameraMovement)
+        {
+            _cameraMovement = cameraMovement;
+        }
 
         private void Awake()
         {

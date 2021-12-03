@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using Zenject;
 
 namespace Game.Cameras.Scripts
@@ -6,13 +7,16 @@ namespace Game.Cameras.Scripts
     [RequireComponent(typeof(ShakeCameraOffset))]
     public class CameraMovement : MonoBehaviour
     {
-        private Transform _chasePoint;
-        private Transform _cockpitPoint;
-
+        [MinValue(0)]
         [SerializeField] private float _moveSpeed;
+        [MinValue(0)]
         [SerializeField] private float _rotateSpeed;
 
+        [Required]
         [SerializeField] private Camera _overlayCamera;
+        
+        private Transform _chasePoint;
+        private Transform _cockpitPoint;
 
         private bool _isChasing = true;
         

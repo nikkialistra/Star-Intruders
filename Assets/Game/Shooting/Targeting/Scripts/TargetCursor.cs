@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Game.Shooting.Targeting.Scripts
 {
@@ -6,6 +7,7 @@ namespace Game.Shooting.Targeting.Scripts
     {
         public Vector2 Position => _sprite.position;
         
+        [Required]
         [SerializeField] private RectTransform _sprite;
         
         private Vector2 _screenClampSize;

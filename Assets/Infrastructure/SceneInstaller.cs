@@ -8,15 +8,19 @@ namespace Infrastructure
 {
     public class SceneInstaller : MonoInstaller
     {
-        [Title("Cameras")]
+        [Title("Cameras"), Required]
         [SerializeField] private Camera _mainCamera;
+        [Required]
         [SerializeField] private ShakeCameraOffset _shakeCameraOffset;
-        
-        [Title("Player")]
+        [Required]
+        [SerializeField] private CameraMovement _cameraMovement;
+
+        [Title("Player"), Required]
         [SerializeField] private Transform _chasePoint;
+        [Required]
         [SerializeField] private Transform _cockpitPoint;
 
-        [Title("Shooting")]
+        [Title("Shooting"), Required]
         [SerializeField] private Cannon _cannon;
         
 
@@ -31,6 +35,7 @@ namespace Infrastructure
         {
             Container.BindInstance(_mainCamera);
             Container.BindInstance(_shakeCameraOffset);
+            Container.BindInstance(_cameraMovement);
         }
 
         private void BindPlayer()

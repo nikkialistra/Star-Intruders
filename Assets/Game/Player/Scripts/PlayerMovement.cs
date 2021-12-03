@@ -9,19 +9,26 @@ namespace Game.Player.Scripts
     [RequireComponent(typeof(PlayerAnimations))]
     public class PlayerMovement : MonoBehaviour
     {
-        [Title("Speed")]
+        [Title("Speed"), MinValue(0)]
         [SerializeField] private float _forwardSpeed;
+        [MinValue(0)]
         [SerializeField] private float _strafeSpeed;
+        [MinValue(0)]
         [SerializeField] private float _hoverSpeed;
+        [MinValue(0)]
         [SerializeField] private float _lookSpeed;
+        [MinValue(0)]
         [SerializeField] private float _rollSpeed;
         
-        [Title("Accelerations")]
+        [Title("Accelerations"), MinValue(0)]
         [SerializeField] private float _forwardAcceleration;
+        [MinValue(0)]
         [SerializeField] private float _strafeAcceleration;
+        [MinValue(0)]
         [SerializeField] private float _hoverAcceleration;
+        [MinValue(0)]
         [SerializeField] private float _rollAcceleration;
-        [Space]
+        [Space, MinValue(0)]
         [SerializeField] private float _accelerationMultiplier;
 
         private float _currentForwardSpeed;

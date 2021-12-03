@@ -1,5 +1,6 @@
 ﻿using Game.Shooting.Targeting.Scripts;
 using Kernel.Types;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -7,10 +8,13 @@ namespace Game.Player.Scripts
 {
     public class Targeting : MonoBehaviour
     {
+        [Required]
         [SerializeField] private TargetCursor _targetCursor;
+        [Required]
         [SerializeField] private TargetIcon _targetIcon;
-        [Space]
+        [Space, MinValue(0)]
         [SerializeField] private float _raycastRadius;
+        [MinValue(0)]
         [SerializeField] private float _maxDistanceToTarget;
         
         private Camera _camera;

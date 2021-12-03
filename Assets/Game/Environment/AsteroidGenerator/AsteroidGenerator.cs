@@ -1,19 +1,24 @@
 ﻿using System.Collections.Generic;
 using Game.Environment.Asteroids;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Environment.AsteroidGenerator
 {
     public class AsteroidGenerator : MonoBehaviour
     {
+        [ValidateInput("@$value.Count > 0"), AssetsOnly]
         [SerializeField] private List<Asteroid> _asteroids;
 
+        [MinValue(0)]
         [SerializeField] private int _amountToSpawn;
-        [Space]
+        [Space, MinValue(0)]
         [SerializeField] private float _minRange;
+        [MinValue(0)]
         [SerializeField] private float _maxRange;
-        [Space]
+        [Space, MinValue(0)]
         [SerializeField] private float _minScale;
+        [MinValue(0)]
         [SerializeField] private float _maxScale;
 
         private void Start()

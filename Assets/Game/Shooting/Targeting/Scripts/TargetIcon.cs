@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using Zenject;
 
 namespace Game.Shooting.Targeting.Scripts
 {
     public class TargetIcon : MonoBehaviour
     {
+        [Required]
         [SerializeField] private Canvas _canvasWithIcon;
-        [Space]
+        
         private Camera _camera;
 
         private bool _hasTarget;

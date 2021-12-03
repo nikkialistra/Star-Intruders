@@ -1,5 +1,6 @@
 ﻿using Game.Cameras.Scripts;
 using Game.Environment.Asteroids;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -7,6 +8,7 @@ namespace Game.Player.Scripts
 {
     public class PlayerEffects : MonoBehaviour
     {
+        [MinValue(0)]
         [SerializeField] private float _shakeOnAsteroidCollision;
 
         private ShakeCameraOffset _shakeCameraOffset;

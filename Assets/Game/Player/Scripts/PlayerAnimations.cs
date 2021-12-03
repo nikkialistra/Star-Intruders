@@ -1,14 +1,19 @@
 ﻿using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Player.Scripts
 {
     public class PlayerAnimations : MonoBehaviour
     {
+        [Required]
         [SerializeField] private Animator _animator;
 
+        [ValidateInput("@$value.Count > 0")]
         [SerializeField] private List<SkinnedMeshRenderer> _engines;
+        [Required]
         [SerializeField] private Material _enabledEngine;
+        [Required]
         [SerializeField] private Material _disabledEngine;
 
         private readonly int _stopped = Animator.StringToHash("stopped");

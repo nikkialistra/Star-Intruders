@@ -565,6 +565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 330585545}
   _shakeCameraOffset: {fileID: 330585549}
+  _cameraMovement: {fileID: 330585550}
   _chasePoint: {fileID: 118022032}
   _cockpitPoint: {fileID: 441591886}
   _cannon: {fileID: 1886360746}
@@ -914,5 +915,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: Environment
       objectReference: {fileID: 0}
+    - target: {fileID: 8652812478462114030, guid: 4637293558b993e43828033c3c4e1232,
+        type: 3}
+      propertyPath: _asteroids.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8652812478462114030, guid: 4637293558b993e43828033c3c4e1232,
+        type: 3}
+      propertyPath: _asteroids.Array.data[0]
+      value: 
+      objectReference: {fileID: 7160123218940804990, guid: f0632d5b20925924a9dabeb524b5532a,
+        type: 3}
+    - target: {fileID: 8652812478462114030, guid: 4637293558b993e43828033c3c4e1232,
+        type: 3}
+      propertyPath: _asteroids.Array.data[1]
+      value: 
+      objectReference: {fileID: -5083730451390098627, guid: c22156d50a9e43f4e97b7e1a1d101dac,
+        type: 3}
+    - target: {fileID: 8652812478462114030, guid: 4637293558b993e43828033c3c4e1232,
+        type: 3}
+      propertyPath: _asteroids.Array.data[2]
+      value: 
+      objectReference: {fileID: -8243032524145826695, guid: 603327ce5467c244f8ceaa5a02e5f5f5,
+        type: 3}
+    - target: {fileID: 8652812478462114030, guid: 4637293558b993e43828033c3c4e1232,
+        type: 3}
+      propertyPath: _asteroids.Array.data[3]
+      value: 
+      objectReference: {fileID: -7669262679776445376, guid: 1fd6a2502059e0a489d590ab4a079957,
+        type: 3}
+    - target: {fileID: 8652812478462114030, guid: 4637293558b993e43828033c3c4e1232,
+        type: 3}
+      propertyPath: _asteroids.Array.data[4]
+      value: 
+      objectReference: {fileID: 7403282677902793776, guid: b362cb95c9c77f445ae70f0b6b1ba88e,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4637293558b993e43828033c3c4e1232, type: 3}

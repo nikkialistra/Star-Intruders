@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Game.Cameras.Scripts
 {
@@ -7,8 +8,10 @@ namespace Game.Cameras.Scripts
         public Vector3 LastValue { get; private set; }
         public Vector3 CurrentValue { get; private set; }
         
+        [MinValue(0)]
+        [SerializeField] private float _dampen = 2f;
+        
         private float _shake;
-        public float _dampen = 2f;
 
         private void Update()
         {

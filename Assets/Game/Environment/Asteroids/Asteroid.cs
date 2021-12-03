@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Game.Environment.Asteroids
@@ -6,13 +7,15 @@ namespace Game.Environment.Asteroids
     [RequireComponent(typeof(Rigidbody))]
     public class Asteroid : MonoBehaviour
     {
+        [MinValue(0)]
         [SerializeField] private float _minSpinSpeed;
+        [MinValue(0)]
         [SerializeField] private float _maxSpinSpeed;
-        [Space]
+        [Space, MinValue(0)]
         [SerializeField] private float _minThrust;
+        [MinValue(0)]
         [SerializeField] private float _maxThrust;
-        [Space] 
-        [Range(0f, 1f)]
+        [Space, Range(0f, 1f)]
         [SerializeField] private float _chanceToMove;
 
         private Rigidbody _rigidBody;
