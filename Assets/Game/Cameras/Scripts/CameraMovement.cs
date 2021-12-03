@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace Game.Cameras.Scripts
 {
     [RequireComponent(typeof(ShakeCameraOffset))]
     public class CameraMovement : MonoBehaviour
     {
-        [SerializeField] private Transform _chasePoint;
-        [SerializeField] private Transform _cockpitPoint;
+        private Transform _chasePoint;
+        private Transform _cockpitPoint;
 
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotateSpeed;
@@ -18,6 +19,13 @@ namespace Game.Cameras.Scripts
         private bool _switchingFinished;
 
         private ShakeCameraOffset _shakeCameraOffset;
+
+        [Inject]
+        public void Construct([Inject(Id = "Chase")] Transform chasePoint, [Inject(Id = "Cockpit")] Transform cockpitPoint)
+        {
+            _chasePoint = chasePoint;
+            _cockpitPoint = cockpitPoint;
+        }
 
         private void Awake()
         {

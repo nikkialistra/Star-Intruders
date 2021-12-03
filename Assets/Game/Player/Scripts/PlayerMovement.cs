@@ -1,4 +1,5 @@
 ﻿using Kernel.Controls;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Player.Scripts
@@ -8,14 +9,14 @@ namespace Game.Player.Scripts
     [RequireComponent(typeof(PlayerAnimations))]
     public class PlayerMovement : MonoBehaviour
     {
-        [Header("Speed")]
+        [Title("Speed")]
         [SerializeField] private float _forwardSpeed;
         [SerializeField] private float _strafeSpeed;
         [SerializeField] private float _hoverSpeed;
         [SerializeField] private float _lookSpeed;
         [SerializeField] private float _rollSpeed;
         
-        [Header("Accelerations")]
+        [Title("Accelerations")]
         [SerializeField] private float _forwardAcceleration;
         [SerializeField] private float _strafeAcceleration;
         [SerializeField] private float _hoverAcceleration;

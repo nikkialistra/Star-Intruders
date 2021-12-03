@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using Kernel.Types;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Player.Scripts
@@ -11,7 +12,7 @@ namespace Game.Player.Scripts
     {
         public bool CanFly { get; private set; }
         
-        [Header("Landing")]
+        [Title("Landing")]
         [SerializeField] private bool _landed;
         [SerializeField] private float _landingDistance;
         [SerializeField] private float _landingRotateSpeed;
@@ -19,11 +20,12 @@ namespace Game.Player.Scripts
         [SerializeField] private float _landingSpeed;
         [SerializeField] private float _minimumLandingSpeedDuration;
 
-        [Header("Takeoff")] 
+        [Title("Takeoff")] 
         [SerializeField] private float _takeOffAltitude;
         [SerializeField] private float _takeoffSpeed;
 
-        [Header("Transform")]
+        [Title("Transform")]
+        [InlineEditor(InlineEditorObjectFieldModes.Boxed)]
         [SerializeField] private Transform _spaceShipBottomPoint;
 
         [SerializeField] private float _timeToTurnOffEngines;

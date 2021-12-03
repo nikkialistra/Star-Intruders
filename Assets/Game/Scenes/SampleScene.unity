@@ -565,6 +565,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainCamera: {fileID: 330585545}
   _shakeCameraOffset: {fileID: 330585549}
+  _chasePoint: {fileID: 118022032}
+  _cockpitPoint: {fileID: 441591886}
   _cannon: {fileID: 1886360746}
 --- !u!114 &2066147695
 MonoBehaviour:

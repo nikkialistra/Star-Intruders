@@ -1,17 +1,18 @@
 ﻿using Game.Shooting.Bullets;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Game.Shooting.Cannons.Scripts
 {
     public class TwinsCannon : Cannon
     {
-        [Header("Muzzles")] [SerializeField] private Transform _leftMuzzle;
+        [Title("Muzzles")] [SerializeField] private Transform _leftMuzzle;
         [SerializeField] private Transform _rightMuzzle;
 
-        [Header("Bullet")] [SerializeField] private Bullet _bullet;
+        [Title("Bullet")] [SerializeField] private Bullet _bullet;
         [SerializeField] private Transform _bulletsParent;
 
-        [Header("Parameters")] [SerializeField]
+        [Title("Parameters")] [SerializeField]
         private float _rechargeTime;
 
         [SerializeField] private float _lifetime;
