@@ -1,4 +1,5 @@
 ﻿using Game.Cameras.Scripts;
+using Game.Shooting.Bullets;
 using Game.Shooting.Cannons.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -22,13 +23,20 @@ namespace Infrastructure
 
         [Title("Shooting"), Required]
         [SerializeField] private Cannon _cannon;
-        
+        [MinValue(0)] 
+        [SerializeField] private int _bulletPoolSize;
+        [Required]
+        [SerializeField] private GameObject _bulletPrefab;
+        [Required] 
+        [SerializeField] private Transform _bulletsParent;
 
         public override void InstallBindings()
         {
             BindCameras();
             BindPlayer();
             BindShooting();
+
+            BindFactories();
         }
 
         private void BindCameras()
@@ -47,6 +55,19 @@ namespace Infrastructure
         private void BindShooting()
         {
             Container.BindInstance(_cannon);
+        }
+
+        private void BindFactories()
+        {
+            Container.BindFactory<BulletSpecs, Bullet, Bullet.Factory>()
+                .FromPoolableMemoryPool<BulletSpecs, Bullet, BulletPool>(pool => pool
+                .WithInitialSize(_bulletPoolSize)
+                .FromComponentInNewPrefab(_bulletPrefab)
+                .UnderTransform(_bulletsParent));
+        }
+
+        private class BulletPool : MonoPoolableMemoryPool<BulletSpecs, IMemoryPool, Bullet>
+        {
         }
     }
 }

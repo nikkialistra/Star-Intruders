@@ -1,6 +1,7 @@
 ﻿using Game.Shooting.Bullets;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Shooting.Cannons.Scripts
 {
@@ -13,8 +14,6 @@ namespace Game.Shooting.Cannons.Scripts
 
         [Title("Bullet"), Required] 
         [SerializeField] private Bullet _bullet;
-        [ChildGameObjectsOnly, Required]
-        [SerializeField] private Transform _bulletsParent;
 
         [Title("Parameters"), MinValue(0)] 
         [SerializeField]
@@ -27,8 +26,16 @@ namespace Game.Shooting.Cannons.Scripts
         [MinValue(0)]
         [SerializeField] private float _moveSpeed;
 
+        private Bullet.Factory _bulletFactory;
+
         private Transform _activeMuzzle;
         private float _nextShootTime;
+
+        [Inject]
+        public void Construct(Bullet.Factory bulletFactory)
+        {
+            _bulletFactory = bulletFactory;
+        }
 
         private void Start()
         {
@@ -52,9 +59,17 @@ namespace Game.Shooting.Cannons.Scripts
 
         private void CreateBullet(Vector3 direction)
         {
-            var bullet = Instantiate(_bullet, _activeMuzzle.transform.position, Quaternion.LookRotation(direction),
-                _bulletsParent);
-            bullet.Initialize(_lifetime, _damage, _moveSpeed, direction);
+            var bulletSpecs = new BulletSpecs
+            {
+                Position = _activeMuzzle.transform.position,
+                Rotation = Quaternion.LookRotation(direction),
+                Damage = _damage,
+                Direction = direction,
+                Lifetime = _lifetime,
+                MoveSpeed = _moveSpeed
+            };
+
+            _bulletFactory.Create(bulletSpecs);
         }
 
         private bool IsRechargeFinished()

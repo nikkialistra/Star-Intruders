@@ -1,16 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Zenject;
 
 namespace Game.Shooting.Bullets
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class Bullet : MonoBehaviour
+    public class Bullet : MonoBehaviour, IPoolable<BulletSpecs, IMemoryPool>, IDisposable
     {
         private float _lifetime;
-        private float _currentLifetime;
         private float _damage;
+        
+        private float _currentLifetime;
 
-        private bool _isInitialized;
-
+        private IMemoryPool _pool;
+        
         private Rigidbody _rigidBody;
 
         private void Awake()
@@ -18,17 +21,34 @@ namespace Game.Shooting.Bullets
             _rigidBody = GetComponent<Rigidbody>();
         }
 
-        public void Initialize(float lifetime, float damage, float moveSpeed, Vector3 direction)
-        {
-            _lifetime = lifetime;
-            _damage = damage;
-
-            _rigidBody.velocity = direction * moveSpeed;
-        }
-
         private void FixedUpdate()
         {
             UpdateCurrentLifetime();
+        }
+
+        public void OnSpawned(BulletSpecs bulletSpecs, IMemoryPool pool)
+        {
+            _pool = pool;
+
+            transform.position = bulletSpecs.Position;
+            transform.rotation = bulletSpecs.Rotation;
+
+            _lifetime = bulletSpecs.Lifetime;
+            _damage = bulletSpecs.Damage;
+
+            _rigidBody.velocity = bulletSpecs.Direction * bulletSpecs.MoveSpeed;
+
+            _currentLifetime = 0;
+        }
+        
+        public void OnDespawned()
+        {
+            _pool = null;
+        }
+
+        public void Dispose()
+        {
+            _pool.Despawn(this);
         }
 
         private void UpdateCurrentLifetime()
@@ -36,8 +56,12 @@ namespace Game.Shooting.Bullets
             _currentLifetime += Time.fixedDeltaTime;
             if (_currentLifetime > _lifetime)
             {
-                Destroy(gameObject);
+                Dispose();
             }
+        }
+
+        public class Factory : PlaceholderFactory<BulletSpecs, Bullet>
+        {
         }
     }
 }
