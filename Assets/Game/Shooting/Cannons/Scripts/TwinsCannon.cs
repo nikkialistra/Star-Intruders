@@ -7,18 +7,19 @@ namespace Game.Shooting.Cannons.Scripts
 {
     public class TwinsCannon : Cannon
     {
-        [Title("Muzzles"), ChildGameObjectsOnly, Required] 
+        [Title("Muzzles")]
+        [ChildGameObjectsOnly, Required]
         [SerializeField] private Transform _leftMuzzle;
         [ChildGameObjectsOnly, Required]
         [SerializeField] private Transform _rightMuzzle;
 
-        [Title("Bullet"), Required] 
+        [Title("Bullet")] 
+        [Required]
         [SerializeField] private Bullet _bullet;
 
-        [Title("Parameters"), MinValue(0)] 
-        [SerializeField]
-        private float _rechargeTime;
-
+        [Title("Parameters")]
+        [MinValue(0)]
+        [SerializeField] private float _rechargeTime;
         [MinValue(0)]
         [SerializeField] private float _lifetime;
         [MinValue(0)]

@@ -9,7 +9,8 @@ namespace Game.Player.Scripts
     [RequireComponent(typeof(PlayerAnimations))]
     public class PlayerMovement : MonoBehaviour
     {
-        [Title("Speed"), MinValue(0)]
+        [Title("Speed")]
+        [MinValue(0)]
         [SerializeField] private float _forwardSpeed;
         [MinValue(0)]
         [SerializeField] private float _strafeSpeed;
@@ -20,7 +21,8 @@ namespace Game.Player.Scripts
         [MinValue(0)]
         [SerializeField] private float _rollSpeed;
         
-        [Title("Accelerations"), MinValue(0)]
+        [Title("Accelerations")]
+        [MinValue(0)]
         [SerializeField] private float _forwardAcceleration;
         [MinValue(0)]
         [SerializeField] private float _strafeAcceleration;

@@ -13,7 +13,8 @@ namespace Game.Player.Scripts
     {
         public bool CanFly { get; private set; } = true;
 
-        [Title("Landing"), MinValue(0)]
+        [Title("Landing")]
+        [MinValue(0)]
         [SerializeField] private float _landingDistance;
         [MinValue(0)]
         [SerializeField] private float _landingRotateSpeed;
@@ -24,15 +25,18 @@ namespace Game.Player.Scripts
         [MinValue(0)]
         [SerializeField] private float _minimumLandingSpeedDuration;
 
-        [Title("Takeoff"), MinValue(0)] 
+        [Title("Takeoff")] 
+        [MinValue(0)]
         [SerializeField] private float _takeOffAltitude;
         [MinValue(0)]
         [SerializeField] private float _takeoffSpeed;
 
-        [Title("Transform"), InlineEditor, Required]
+        [Title("Transform")]
+        [InlineEditor, Required]
         [SerializeField] private Transform _spaceShipBottomPoint;
 
-        [Title("Animations"), MinValue(0)]
+        [Title("Animations")]
+        [MinValue(0)]
         [SerializeField] private float _timeToTurnOffEngines;
 
         private Rigidbody _rigidBody;

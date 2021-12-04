@@ -12,7 +12,8 @@ namespace Game.Player.Scripts
         [SerializeField] private TargetCursor _targetCursor;
         [Required]
         [SerializeField] private TargetIcon _targetIcon;
-        [Space, MinValue(0)]
+        [Space]
+        [MinValue(0)]
         [SerializeField] private float _raycastRadius;
         [MinValue(0)]
         [SerializeField] private float _maxDistanceToTarget;
