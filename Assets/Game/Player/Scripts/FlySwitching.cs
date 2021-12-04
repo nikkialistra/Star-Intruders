@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using DG.Tweening;
 using Kernel.Types;
 using Sirenix.OdinInspector;
@@ -10,11 +11,9 @@ namespace Game.Player.Scripts
     [RequireComponent(typeof(PlayerAnimations))]
     public class FlySwitching : MonoBehaviour
     {
-        public bool CanFly { get; private set; }
-        
-        [Title("Landing")]
-        [SerializeField] private bool _landed;
-        [MinValue(0)]
+        public bool CanFly { get; private set; } = true;
+
+        [Title("Landing"), MinValue(0)]
         [SerializeField] private float _landingDistance;
         [MinValue(0)]
         [SerializeField] private float _landingRotateSpeed;
@@ -41,30 +40,90 @@ namespace Game.Player.Scripts
         
         private LandingSurface _landingSurface;
         private Vector3 _landingAngle;
-        
-        private Coroutine _landingAnimation;
-        private Coroutine _takeOffAnimation;
+
+        private bool _isTakingOff;
+        private bool _isLanding;
 
         private void Awake()
         {
             _rigidBody = GetComponent<Rigidbody>();
             _playerAnimations = GetComponent<PlayerAnimations>();
-            CanFly = !_landed;
         }
 
         public void TryLand()
         {
-            if (_landed)
+            if (!CanFly || _isLanding)
             {
                 return;
             }
 
             if (GetLandingSurfaceWithAngle())
             {
-                _landed = true;
                 CanFly = false;
                 PlayLandingAnimation();
             }
+        }
+
+        public void TryTakeoff()
+        {
+            if (CanFly || _isLanding)
+            {
+                return;
+            }
+
+            TakeOff();
+        }
+
+        private void PlayLandingAnimation()
+        {
+            if (_isTakingOff)
+            {
+                return;
+            }
+            
+            _playerAnimations.Land();
+            
+            _isLanding = true;
+            _rigidBody.isKinematic = true;
+
+            StartCoroutine(RotateSpaceShipToLandingAngle());
+        }
+
+        private IEnumerator RotateSpaceShipToLandingAngle()
+        {
+            yield return _rigidBody.DORotate(_landingAngle, GetRotationDuration()).WaitForCompletion();
+
+            StartCoroutine(LandSpaceShipToSurface());
+        }
+
+        private IEnumerator LandSpaceShipToSurface()
+        {
+            GetLandingParameters(out var targetPosition, out var duration);
+
+            yield return _rigidBody.DOMove(targetPosition, duration).WaitForCompletion();
+            yield return new WaitForSeconds(_timeToTurnOffEngines);
+            
+            _playerAnimations.TurnOffEngines();
+            _isLanding = false;
+        }
+
+        private void TakeOff()
+        {
+            _isTakingOff = true;
+            _playerAnimations.TakeOff();
+            StartCoroutine(GainAltitude());
+        }
+
+        private IEnumerator GainAltitude()
+        {
+            GetAltitudeParameters(out var targetPosition, out var duration);
+
+            yield return _rigidBody.DOMove(targetPosition, duration).WaitForCompletion();
+            
+            _rigidBody.isKinematic = false;
+            _isTakingOff = false;
+
+            CanFly = true;
         }
 
         private bool GetLandingSurfaceWithAngle()
@@ -80,50 +139,6 @@ namespace Game.Player.Scripts
                 }
             }
             return false;
-        }
-
-        private void PlayLandingAnimation()
-        {
-            if (_takeOffAnimation != null)
-            {
-                StopCoroutine(_takeOffAnimation);
-            }
-            
-            _playerAnimations.Land();
-            _rigidBody.isKinematic = true;
-
-            _landingAnimation = StartCoroutine(RotateSpaceShipToLandingAngle());
-        }
-
-        private IEnumerator RotateSpaceShipToLandingAngle()
-        {
-            var duration = GetRotationDuration();
-            
-            yield return _rigidBody.DORotate(_landingAngle, duration).WaitForCompletion();
-
-            _landingAnimation = StartCoroutine(LandSpaceShipToSurface());
-        }
-
-        private IEnumerator LandSpaceShipToSurface()
-        {
-            var closestPointToLandingSurface = GetClosestPointToLandingSurface();
-
-            var distanceToLand = Vector3.Distance(_spaceShipBottomPoint.position, closestPointToLandingSurface);
-            var duration = GetDuration(distanceToLand, _landingSpeed, _minimumLandingSpeedDuration);
-
-            var targetPosition = GetTargetPosition(closestPointToLandingSurface, distanceToLand);
-
-            yield return _rigidBody.DOMove(targetPosition, duration).WaitForCompletion();
-
-            yield return new WaitForSeconds(_timeToTurnOffEngines);
-            _playerAnimations.TurnOffEngines();
-        }
-
-        private Vector3 GetTargetPosition(Vector3 closestPointToLandingSurface, float distanceToLand)
-        {
-            var directionToLand = (closestPointToLandingSurface - _spaceShipBottomPoint.position).normalized;
-            var targetPosition = transform.position + directionToLand * distanceToLand;
-            return targetPosition;
         }
 
         private float GetRotationDuration()
@@ -156,53 +171,42 @@ namespace Game.Player.Scripts
             return Mathf.Abs(difference);
         }
 
+        private float GetDuration(float value, float speed, float minimumValue = Mathf.NegativeInfinity)
+        {
+            var duration = value / speed;
+            duration = Mathf.Max(duration, minimumValue);
+            return duration;
+        }
+
+        private void GetLandingParameters(out Vector3 targetPosition, out float duration)
+        {
+            var closestPointToLandingSurface = GetClosestPointToLandingSurface();
+
+            var distanceToLand = Vector3.Distance(_spaceShipBottomPoint.position, closestPointToLandingSurface);
+            duration = GetDuration(distanceToLand, _landingSpeed, _minimumLandingSpeedDuration);
+
+            targetPosition = GetTargetPosition(closestPointToLandingSurface, distanceToLand);
+        }
+
+        private void GetAltitudeParameters(out Vector3 targetPosition, out float duration)
+        {
+            var directionToTakeoff = _rigidBody.transform.up;
+            duration = GetDuration(_takeOffAltitude, _takeoffSpeed);
+
+            targetPosition = transform.position + directionToTakeoff * _takeOffAltitude;
+        }
+
         private Vector3 GetClosestPointToLandingSurface()
         {
             var landingSurfaceCollider = _landingSurface.GetComponent<Collider>();
             return landingSurfaceCollider.ClosestPoint(_spaceShipBottomPoint.position);
         }
 
-        public void TryTakeoff()
+        private Vector3 GetTargetPosition(Vector3 closestPointToLandingSurface, float distanceToLand)
         {
-            if (!_landed)
-            {
-                return;
-            }
-
-            if (_landingAnimation != null)
-            {
-                StopCoroutine(_landingAnimation);
-            }
-
-            _landed = false;
-            
-            PlayTakeOffAnimation();
-        }
-
-        private void PlayTakeOffAnimation()
-        {
-            _playerAnimations.TakeOff();
-            _takeOffAnimation = StartCoroutine(GainAltitude());
-        }
-
-        private IEnumerator GainAltitude()
-        {
-            var directionToTakeoff = _rigidBody.transform.up;
-            var duration = GetDuration(_takeOffAltitude, _takeoffSpeed);
-
-            var targetPosition = transform.position + directionToTakeoff * _takeOffAltitude;
-
-            yield return _rigidBody.DOMove(targetPosition, duration).WaitForCompletion();
-
-            _rigidBody.isKinematic = false;
-            CanFly = true;
-        }
-
-        private float GetDuration(float value, float speed, float minimumValue = Mathf.NegativeInfinity)
-        {
-            var duration = value / speed;
-            duration = Mathf.Max(duration, minimumValue);
-            return duration;
+            var directionToLand = (closestPointToLandingSurface - _spaceShipBottomPoint.position).normalized;
+            var targetPosition = transform.position + directionToLand * distanceToLand;
+            return targetPosition;
         }
     }
 }
