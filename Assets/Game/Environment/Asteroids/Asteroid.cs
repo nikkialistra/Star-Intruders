@@ -18,16 +18,16 @@ namespace Game.Environment.Asteroids
         [Space, Range(0f, 1f)]
         [SerializeField] private float _chanceToMove;
 
-        private Rigidbody _rigidBody;
+        private Rigidbody _rigidbody;
 
         private void Awake()
         {
-            _rigidBody = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         public void SetMass()
         {
-            _rigidBody.mass = transform.localScale.x;
+            _rigidbody.mass = transform.localScale.x;
         }
 
         public void AddMovement()
@@ -43,8 +43,8 @@ namespace Game.Environment.Asteroids
             var spinSpeed = Random.Range(_minSpinSpeed, _maxSpinSpeed);
             var rotation = Random.rotation.eulerAngles;
 
-            _rigidBody.AddForce(direction * thrust, ForceMode.Impulse);
-            _rigidBody.AddTorque(rotation * spinSpeed, ForceMode.Impulse);
+            _rigidbody.AddForce(direction * thrust, ForceMode.Impulse);
+            _rigidbody.AddTorque(rotation * spinSpeed, ForceMode.Impulse);
         }
     }
 }

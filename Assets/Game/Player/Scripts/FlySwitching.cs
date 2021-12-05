@@ -39,7 +39,7 @@ namespace Game.Player.Scripts
         [MinValue(0)]
         [SerializeField] private float _timeToTurnOffEngines;
 
-        private Rigidbody _rigidBody;
+        private Rigidbody _rigidbody;
         private PlayerAnimations _playerAnimations;
         
         private LandingSurface _landingSurface;
@@ -50,7 +50,7 @@ namespace Game.Player.Scripts
 
         private void Awake()
         {
-            _rigidBody = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
             _playerAnimations = GetComponent<PlayerAnimations>();
         }
 
@@ -88,14 +88,14 @@ namespace Game.Player.Scripts
             _playerAnimations.Land();
             
             _isLanding = true;
-            _rigidBody.isKinematic = true;
+            _rigidbody.isKinematic = true;
 
             StartCoroutine(RotateSpaceShipToLandingAngle());
         }
 
         private IEnumerator RotateSpaceShipToLandingAngle()
         {
-            yield return _rigidBody.DORotate(_landingAngle, GetRotationDuration()).WaitForCompletion();
+            yield return _rigidbody.DORotate(_landingAngle, GetRotationDuration()).WaitForCompletion();
 
             StartCoroutine(LandSpaceShipToSurface());
         }
@@ -104,7 +104,7 @@ namespace Game.Player.Scripts
         {
             GetLandingParameters(out var targetPosition, out var duration);
 
-            yield return _rigidBody.DOMove(targetPosition, duration).WaitForCompletion();
+            yield return _rigidbody.DOMove(targetPosition, duration).WaitForCompletion();
             yield return new WaitForSeconds(_timeToTurnOffEngines);
             
             _playerAnimations.TurnOffEngines();
@@ -122,9 +122,9 @@ namespace Game.Player.Scripts
         {
             GetAltitudeParameters(out var targetPosition, out var duration);
 
-            yield return _rigidBody.DOMove(targetPosition, duration).WaitForCompletion();
+            yield return _rigidbody.DOMove(targetPosition, duration).WaitForCompletion();
             
-            _rigidBody.isKinematic = false;
+            _rigidbody.isKinematic = false;
             _isTakingOff = false;
 
             CanFly = true;
@@ -138,7 +138,7 @@ namespace Game.Player.Scripts
                 {
                     _landingSurface = landingSurface;
                     _landingAngle = landingSurface.transform.rotation.eulerAngles;
-                    _landingAngle.y = _rigidBody.rotation.eulerAngles.y;
+                    _landingAngle.y = _rigidbody.rotation.eulerAngles.y;
                     return true;
                 }
             }
@@ -194,7 +194,7 @@ namespace Game.Player.Scripts
 
         private void GetAltitudeParameters(out Vector3 targetPosition, out float duration)
         {
-            var directionToTakeoff = _rigidBody.transform.up;
+            var directionToTakeoff = _rigidbody.transform.up;
             duration = GetDuration(_takeOffAltitude, _takeoffSpeed);
 
             targetPosition = transform.position + directionToTakeoff * _takeOffAltitude;

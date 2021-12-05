@@ -8,22 +8,22 @@ namespace Game.Player.Scripts
 {
     public class Targeting : MonoBehaviour
     {
-        [Required]
-        [SerializeField] private TargetCursor _targetCursor;
-        [Required]
-        [SerializeField] private TargetIcon _targetIcon;
-        [Space]
         [MinValue(0)]
         [SerializeField] private float _raycastRadius;
         [MinValue(0)]
         [SerializeField] private float _maxDistanceToTarget;
         
+        private TargetCursor _targetCursor;
+        private TargetIcon _targetIcon;
+        
         private Camera _camera;
 
         [Inject]
-        public void Construct(Camera camera)
+        public void Construct(Camera camera, TargetCursor targetCursor, TargetIcon targetIcon)
         {
             _camera = camera;
+            _targetCursor = targetCursor;
+            _targetIcon = targetIcon;
         }
 
         public void UpdateFromInput(Vector2 mousePosition)
@@ -38,7 +38,7 @@ namespace Game.Player.Scripts
             if (Physics.SphereCast(ray, _raycastRadius, out var hit, _maxDistanceToTarget)) {
                 if (hit.transform.TryGetComponent(out Targetable targetable))
                 {
-                    _targetIcon.SetTarget(targetable.transform);
+                    _targetIcon.SetTarget(targetable);
                 }
             }
         }

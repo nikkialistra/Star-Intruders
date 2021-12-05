@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Kernel.Types;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -13,7 +14,7 @@ namespace Game.Shooting.Targeting.Scripts
 
         private bool _hasTarget;
 
-        private Transform _target;
+        private Targetable _target;
 
         [Inject]
         public void Construct(Camera camera)
@@ -21,7 +22,7 @@ namespace Game.Shooting.Targeting.Scripts
             _camera = camera;
         }
 
-        public void SetTarget(Transform target)
+        public void SetTarget(Targetable target)
         {
             _target = target;
             _hasTarget = true;
@@ -36,8 +37,11 @@ namespace Game.Shooting.Targeting.Scripts
         {
             if (_hasTarget)
             {
-                _canvasWithIcon.transform.position = _target.transform.position;
-                _canvasWithIcon.transform.LookAt(transform.position + _camera.transform.rotation * Vector3.forward, _camera.transform.rotation * Vector3.up);
+                _canvasWithIcon.transform.position = _target.Position;
+                _canvasWithIcon.transform.localScale = _target.Scale;
+                
+                _canvasWithIcon.transform.LookAt(transform.position + _camera.transform.rotation * Vector3.forward,
+                    _camera.transform.rotation * Vector3.up);
             }
         }
     }

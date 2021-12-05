@@ -30,6 +30,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -7116571489878188640, guid: 43b740f891f3e96449f9219c715bb685, type: 3}
+--- !u!114 &-4122937476320886872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779876395034064389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04148abde62a4087a00f742bd6aa2f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _indicatorScale: 1
 --- !u!114 &7160123218940804990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,18 +60,6 @@ MonoBehaviour:
   _minThrust: 1
   _maxThrust: 2
   _chanceToMove: 0.6
---- !u!114 &-4122937476320886872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 779876395034064389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04148abde62a4087a00f742bd6aa2f8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &437909792652692308
 PrefabInstance:
   m_ObjectHideFlags: 0

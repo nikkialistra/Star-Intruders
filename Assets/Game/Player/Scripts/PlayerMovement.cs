@@ -30,7 +30,8 @@ namespace Game.Player.Scripts
         [SerializeField] private float _hoverAcceleration;
         [MinValue(0)]
         [SerializeField] private float _rollAcceleration;
-        [Space, MinValue(0)]
+        [Space]
+        [MinValue(0)]
         [SerializeField] private float _accelerationMultiplier;
 
         private float _currentForwardSpeed;
@@ -42,13 +43,13 @@ namespace Game.Player.Scripts
 
         private float _currentRoll;
 
-        private Rigidbody _rigidBody;
+        private Rigidbody _rigidbody;
         private FlySwitching _flySwitching;
         private PlayerAnimations _playerAnimations;
 
         private void Awake()
         {
-            _rigidBody = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
             _flySwitching = GetComponent<FlySwitching>();
             _playerAnimations = GetComponent<PlayerAnimations>();
         }
@@ -105,13 +106,13 @@ namespace Game.Player.Scripts
         {
             var velocity = (transform.forward * _currentForwardSpeed) + (transform.right * _currentStrafeSpeed) +
                            (transform.up * _currentHoverSpeed);
-            _rigidBody.velocity = velocity;
+            _rigidbody.velocity = velocity;
         }
 
         private void ApplyRotation()
         {
             var rotation = new Vector3(-_lookOffset.y * _lookSpeed, _lookOffset.x * _lookSpeed, -_currentRoll * _rollSpeed) * Time.fixedDeltaTime;
-            _rigidBody.MoveRotation(_rigidBody.rotation * Quaternion.Euler(rotation));
+            _rigidbody.MoveRotation(_rigidbody.rotation * Quaternion.Euler(rotation));
         }
 
         private void UpdateMoveAnimations(MoveInput moveInput)

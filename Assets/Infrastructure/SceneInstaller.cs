@@ -1,6 +1,7 @@
 ﻿using Game.Cameras.Scripts;
 using Game.Shooting.Bullets;
 using Game.Shooting.Cannons.Scripts;
+using Game.Shooting.Targeting.Scripts;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -9,19 +10,28 @@ namespace Infrastructure
 {
     public class SceneInstaller : MonoInstaller
     {
-        [Title("Cameras"), Required]
+        [Title("Cameras")]
+        [Required]
         [SerializeField] private Camera _mainCamera;
         [Required]
         [SerializeField] private ShakeCameraOffset _shakeCameraOffset;
         [Required]
         [SerializeField] private CameraMovement _cameraMovement;
 
-        [Title("Player"), Required]
+        [Title("Player")]
+        [Required]
         [SerializeField] private Transform _chasePoint;
         [Required]
         [SerializeField] private Transform _cockpitPoint;
+        
+        [Title("Targeting")]
+        [Required]
+        [SerializeField] private TargetCursor _targetCursor;
+        [Required]
+        [SerializeField] private TargetIcon _targetIcon;
 
-        [Title("Shooting"), Required]
+        [Title("Shooting")]
+        [Required]
         [SerializeField] private Cannon _cannon;
         [MinValue(0)] 
         [SerializeField] private int _bulletPoolSize;
@@ -33,7 +43,9 @@ namespace Infrastructure
         public override void InstallBindings()
         {
             BindCameras();
+            
             BindPlayer();
+            BindTargeting();
             BindShooting();
 
             BindFactories();
@@ -50,6 +62,12 @@ namespace Infrastructure
         {
             Container.BindInstance(_chasePoint).WithId("Chase");
             Container.BindInstance(_cockpitPoint).WithId("Cockpit");
+        }
+
+        private void BindTargeting()
+        {
+            Container.BindInstance(_targetCursor);
+            Container.BindInstance(_targetIcon);
         }
 
         private void BindShooting()

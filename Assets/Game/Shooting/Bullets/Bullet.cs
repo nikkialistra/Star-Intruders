@@ -14,11 +14,11 @@ namespace Game.Shooting.Bullets
 
         private IMemoryPool _pool;
         
-        private Rigidbody _rigidBody;
+        private Rigidbody _rigidbody;
 
         private void Awake()
         {
-            _rigidBody = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         private void FixedUpdate()
@@ -36,7 +36,7 @@ namespace Game.Shooting.Bullets
             _lifetime = bulletSpecs.Lifetime;
             _damage = bulletSpecs.Damage;
 
-            _rigidBody.velocity = bulletSpecs.Direction * bulletSpecs.MoveSpeed;
+            _rigidbody.velocity = bulletSpecs.Direction * bulletSpecs.MoveSpeed;
 
             _currentLifetime = 0;
         }
