@@ -12,11 +12,13 @@ namespace Game.Environment.AsteroidGenerator
 
         [MinValue(0)]
         [SerializeField] private int _amountToSpawn;
-        [Space, MinValue(0)]
+        [Space]
+        [MinValue(0)]
         [SerializeField] private float _minRange;
         [MinValue(0)]
         [SerializeField] private float _maxRange;
-        [Space, MinValue(0)]
+        [Space]
+        [MinValue(0)]
         [SerializeField] private float _minScale;
         [MinValue(0)]
         [SerializeField] private float _maxScale;

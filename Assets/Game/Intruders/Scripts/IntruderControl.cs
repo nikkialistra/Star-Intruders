@@ -1,7 +1,7 @@
 ﻿using Game.Environment.TransitZone;
 using UnityEngine;
 
-namespace Game.Intruder
+namespace Game.Intruders.Scripts
 {
     [RequireComponent(typeof(Rigidbody))]
     public class IntruderControl : MonoBehaviour
@@ -21,13 +21,20 @@ namespace Game.Intruder
 
         private void Start()
         {
-            _targetPoint = _transitZoneDestination.RandomPointInBox();
+            HeadToTarget();
+        }
+
+        private void HeadToTarget()
+        {
+            _targetPoint = _transitZoneDestination.GetRandomPointInBox();
+            transform.LookAt(_targetPoint);
         }
 
         private void FixedUpdate()
         {
             var newPosition = Vector3.MoveTowards(transform.position, _targetPoint, _speed * Time.fixedDeltaTime);
             _rigidbody.MovePosition(newPosition);
+            transform.LookAt(_targetPoint);
         }
     }
 }

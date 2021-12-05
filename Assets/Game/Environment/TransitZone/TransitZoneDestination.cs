@@ -5,16 +5,14 @@ namespace Game.Environment.TransitZone
     [RequireComponent(typeof(BoxCollider))]
     public class TransitZoneDestination : MonoBehaviour
     {
-        private BoxCollider _boxCollider;
         private Bounds _bounds;
 
         private void Awake()
         {
-            _boxCollider = GetComponent<BoxCollider>();
-            _bounds = _boxCollider.bounds;
+            _bounds = GetComponent<BoxCollider>().bounds;
         }
 
-        public Vector3 RandomPointInBox()
+        public Vector3 GetRandomPointInBox()
         {
             return new Vector3(
                 Random.Range(_bounds.min.x, _bounds.max.x),
