@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Game.Intruders.Scripts;
 using Kernel.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game.IntruderGenerator
 {
@@ -12,9 +15,18 @@ namespace Game.IntruderGenerator
         [ValidateInput("@$value.Count > 0"), AssetsOnly]
         [SerializeField] private List<Intruder> _intruders;
 
-        [MinValue(0)] 
+        [Title("Spawning")]
+        [SerializeField] private bool _infiniteSpawn;
+        [EnableIf("@!_infiniteSpawn"), MinValue(0)] 
         [SerializeField] private int _amountToSpawn;
 
+        [Title("Timings")]
+        [MinValue(0)]
+        [SerializeField] private float _timeBetweenSpawns;
+        [MinValue(0)] 
+        [SerializeField] private float _timeVariation;
+
+        private int _spawnedAmount;
         private Bounds _bounds;
 
         private void Awake()
@@ -24,17 +36,28 @@ namespace Game.IntruderGenerator
 
         private void Start()
         {
-            Generate();
+            if (_infiniteSpawn)
+                _amountToSpawn = Int32.MaxValue;
+            
+            StartCoroutine(Generate());
         }
 
-        private void Generate()
+        private IEnumerator Generate()
         {
-            for (int i = 0; i < _amountToSpawn; i++)
+            while (_spawnedAmount < _amountToSpawn)
             {
-                var spawnPosition = GetRandomPointInBox();
-                var specs = GetRandomSpecs();
-                Place(spawnPosition, specs);
+                var waitingTime = _timeBetweenSpawns + Random.Range(-_timeVariation, _timeVariation);
+                yield return new WaitForSeconds(waitingTime);
+                Spawn();
             }
+        }
+
+        private void Spawn()
+        {
+            var spawnPosition = GetRandomPointInBox();
+            var specs = GetRandomSpecs();
+            Place(spawnPosition, specs);
+
         }
 
         private Vector3 GetRandomPointInBox()
