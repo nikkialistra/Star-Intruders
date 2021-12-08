@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 7982335554855745916}
   - component: {fileID: 1947460198205005534}
   - component: {fileID: 1947460198205005535}
+  - component: {fileID: -5969477535072864471}
   m_Layer: 0
   m_Name: Intruder
   m_TagString: Untagged
@@ -138,6 +139,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _indicatorScale: 1.2
+--- !u!114 &-5969477535072864471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557904219200661592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bbb076a3dd443b1bf9d82ea6f38873c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fullHealth: 100
+  _startHealth: 100
 --- !u!95 &3557904219053522109
 Animator:
   serializedVersion: 4
