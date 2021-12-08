@@ -23,7 +23,7 @@ namespace Game.Shooting.Cannons.Scripts
         [MinValue(0)]
         [SerializeField] private float _lifetime;
         [MinValue(0)]
-        [SerializeField] private float _damage;
+        [SerializeField] private int _damage;
         [MinValue(0)]
         [SerializeField] private float _moveSpeed;
 

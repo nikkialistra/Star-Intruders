@@ -34,13 +34,19 @@ namespace Kernel.Entity
         private bool IsAlive => _health > 0;
         
         private Coroutine _takingDamage;
-        
+
+        private void Start()
+        {
+            _health = _startHealth;
+        }
+
         public void TakeDamage(int value)
         {
             CheckTakeDamageValidity(value);
 
             _health -= value;
             HealthChange?.Invoke(_health);
+            Debug.Log(_health);
 
             if (!IsAlive)
             {

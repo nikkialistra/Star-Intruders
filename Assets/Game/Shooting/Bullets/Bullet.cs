@@ -5,20 +5,28 @@ using Zenject;
 namespace Game.Shooting.Bullets
 {
     [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(BulletDamager))]
     public class Bullet : MonoBehaviour, IPoolable<BulletSpecs, IMemoryPool>, IDisposable
     {
         private float _lifetime;
-        private float _damage;
+        private int _damage;
         
         private float _currentLifetime;
 
         private IMemoryPool _pool;
-        
+
+        private BulletDamager _damager;
         private Rigidbody _rigidbody;
 
         private void Awake()
         {
+            _damager = GetComponent<BulletDamager>();
             _rigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void Start()
+        {
+            _damager.Hit += Dispose;
         }
 
         private void FixedUpdate()
@@ -34,7 +42,7 @@ namespace Game.Shooting.Bullets
             transform.rotation = bulletSpecs.Rotation;
 
             _lifetime = bulletSpecs.Lifetime;
-            _damage = bulletSpecs.Damage;
+            _damager.SetDamage(bulletSpecs.Damage);
 
             _rigidbody.velocity = bulletSpecs.Direction * bulletSpecs.MoveSpeed;
 
