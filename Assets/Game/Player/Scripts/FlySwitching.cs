@@ -40,7 +40,7 @@ namespace Game.Player.Scripts
         [SerializeField] private float _timeToTurnOffEngines;
 
         private Rigidbody _rigidbody;
-        private PlayerAnimations _playerAnimations;
+        private PlayerAnimations _animations;
         
         private LandingSurface _landingSurface;
         private Vector3 _landingAngle;
@@ -51,7 +51,7 @@ namespace Game.Player.Scripts
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            _playerAnimations = GetComponent<PlayerAnimations>();
+            _animations = GetComponent<PlayerAnimations>();
         }
 
         public void TryLand()
@@ -85,7 +85,7 @@ namespace Game.Player.Scripts
                 return;
             }
             
-            _playerAnimations.Land();
+            _animations.Land();
             
             _isLanding = true;
             _rigidbody.isKinematic = true;
@@ -107,14 +107,14 @@ namespace Game.Player.Scripts
             yield return _rigidbody.DOMove(targetPosition, duration).WaitForCompletion();
             yield return new WaitForSeconds(_timeToTurnOffEngines);
             
-            _playerAnimations.TurnOffEngines();
+            _animations.TurnOffEngines();
             _isLanding = false;
         }
 
         private void TakeOff()
         {
             _isTakingOff = true;
-            _playerAnimations.TakeOff();
+            _animations.TakeOff();
             StartCoroutine(GainAltitude());
         }
 

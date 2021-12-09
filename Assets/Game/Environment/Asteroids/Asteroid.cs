@@ -25,11 +25,6 @@ namespace Game.Environment.Asteroids
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        public void SetMass()
-        {
-            _rigidbody.mass = transform.localScale.x;
-        }
-
         public void AddMovement()
         {
             if (Random.Range(0f, 1f) > _chanceToMove)
@@ -45,6 +40,12 @@ namespace Game.Environment.Asteroids
 
             _rigidbody.AddForce(direction * thrust, ForceMode.Impulse);
             _rigidbody.AddTorque(rotation * spinSpeed, ForceMode.Impulse);
+        }
+
+        public void SetScale(float scale)
+        {
+            transform.localScale = new Vector3(scale, scale, scale);
+            _rigidbody.mass *= scale;
         }
     }
 }

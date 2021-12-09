@@ -59,17 +59,18 @@ namespace Game.Environment.AsteroidGenerator
         private void Place(Vector3 spawnPosition)
         {
             var asteroid = InstantiateAsteroid(spawnPosition);
-            asteroid.SetMass();
+            
+            var scale = Random.Range(_minScale, _maxScale);
+            asteroid.SetScale(scale);
+            
             asteroid.AddMovement();
         }
 
         private Asteroid InstantiateAsteroid(Vector3 spawnPosition)
         {
             var index = Random.Range(0, _asteroids.Count);
-            var scale = Random.Range(_minScale, _maxScale);
-
             var asteroid = Instantiate(_asteroids[index], spawnPosition, Random.rotation, transform);
-            asteroid.transform.localScale = new Vector3(scale, scale, scale);
+            
             return asteroid;
         }
     }

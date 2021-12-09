@@ -20,9 +20,9 @@ namespace Game.Player.Scripts
         private PlayerInput _input;
         
         private FlySwitching _flySwitching;
-        private PlayerMovement _playerMovement;
+        private PlayerMovement _movement;
         private Targeting _targeting;
-        private PlayerShooting _playerShooting;
+        private PlayerShooting _shooting;
 
         private InputAction _forwardAction;
         private InputAction _strafeAction;
@@ -43,9 +43,9 @@ namespace Game.Player.Scripts
         {
             _input = GetComponent<PlayerInput>();
             _flySwitching = GetComponent<FlySwitching>();
-            _playerMovement = GetComponent<PlayerMovement>();
+            _movement = GetComponent<PlayerMovement>();
             _targeting = GetComponent<Targeting>();
-            _playerShooting = GetComponent<PlayerShooting>();
+            _shooting = GetComponent<PlayerShooting>();
             
             _forwardAction = _input.actions.FindAction("Forward");
             _strafeAction = _input.actions.FindAction("Strafe");
@@ -97,7 +97,7 @@ namespace Game.Player.Scripts
 
         private void Move()
         {
-            _playerMovement.Move(_moveInput);
+            _movement.Move(_moveInput);
         }
 
         private void TryFlySwitch()
@@ -120,7 +120,7 @@ namespace Game.Player.Scripts
         {
             if (_shootAction.ReadValue<float>() > 0)
             {
-                _playerShooting.Shoot(_lookPositionAction.ReadValue<Vector2>());
+                _shooting.Shoot(_lookPositionAction.ReadValue<Vector2>());
             }
         }
     }

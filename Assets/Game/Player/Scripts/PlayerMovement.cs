@@ -43,15 +43,17 @@ namespace Game.Player.Scripts
 
         private float _currentRoll;
 
+        private bool _movingUnderControl = true;
+        
         private Rigidbody _rigidbody;
         private FlySwitching _flySwitching;
-        private PlayerAnimations _playerAnimations;
+        private PlayerAnimations _animations;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _flySwitching = GetComponent<FlySwitching>();
-            _playerAnimations = GetComponent<PlayerAnimations>();
+            _animations = GetComponent<PlayerAnimations>();
         }
 
         private void Start()
@@ -67,14 +69,27 @@ namespace Game.Player.Scripts
                 return;
             }
 
-            CalculateSpeed(moveInput);
-            CalculateLookOffset(moveInput);
-            CalculateRoll(moveInput);
+            if (_movingUnderControl)
+            {
+                CalculateSpeed(moveInput);
+                CalculateLookOffset(moveInput);
+                CalculateRoll(moveInput);
+            }
 
             ApplySpeed();
             ApplyRotation();
 
             UpdateMoveAnimations(moveInput);
+        }
+
+        public void TakeAwayControl()
+        {
+            _movingUnderControl = false;
+        }
+
+        public void ReturnControl()
+        {
+            _movingUnderControl = true;
         }
 
         private void CalculateSpeed(MoveInput moveInput)
@@ -119,11 +134,11 @@ namespace Game.Player.Scripts
         {
             if (moveInput.ForwardValue > 0)
             {
-                _playerAnimations.Move();
+                _animations.Move();
             }
             else
             {
-                _playerAnimations.Stop();
+                _animations.Stop();
             }
         }
     }
