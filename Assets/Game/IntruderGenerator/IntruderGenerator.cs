@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using Game.Intruders.Scripts;
 using Kernel.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Game.IntruderGenerator
@@ -12,9 +12,6 @@ namespace Game.IntruderGenerator
     [RequireComponent(typeof(BoxCollider))]
     public class IntruderGenerator : MonoBehaviour
     {
-        [ValidateInput("@$value.Count > 0"), AssetsOnly]
-        [SerializeField] private List<Intruder> _intruders;
-
         [Title("Spawning")]
         [SerializeField] private bool _infiniteSpawn;
         [EnableIf("@!_infiniteSpawn"), MinValue(0)] 
@@ -26,8 +23,16 @@ namespace Game.IntruderGenerator
         [MinValue(0)] 
         [SerializeField] private float _timeVariation;
 
+        private Intruder.Factory _intruderFactory;
+
         private int _spawnedAmount;
         private Bounds _bounds;
+
+        [Inject]
+        public void Construct(Intruder.Factory intruderFactory)
+        {
+            _intruderFactory = intruderFactory;
+        }
 
         private void Awake()
         {
@@ -84,10 +89,7 @@ namespace Game.IntruderGenerator
 
         private void Place(Vector3 spawnPosition, IntruderSpecs specs)
         {
-            var index = Random.Range(0, _intruders.Count);
-
-            var intruder = Instantiate(_intruders[index], spawnPosition, Quaternion.identity, transform);
-            intruder.Initialize(specs);
+            _intruderFactory.Create(specs, spawnPosition);
         }
     }
 }

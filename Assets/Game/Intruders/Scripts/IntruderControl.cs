@@ -1,30 +1,32 @@
 ﻿using Game.Environment.TransitZone;
 using UnityEngine;
+using Zenject;
 
 namespace Game.Intruders.Scripts
 {
     [RequireComponent(typeof(Rigidbody))]
     public class IntruderControl : MonoBehaviour
     {
-        [SerializeField] private TransitZoneDestination _transitZoneDestination;
-        
         [SerializeField] private float _speed;
+        
+        private TransitZoneDestination _transitZoneDestination;
 
         private Vector3 _targetPoint;
         
         private Rigidbody _rigidbody;
+
+        [Inject]
+        public void Construct(TransitZoneDestination transitZoneDestination)
+        {
+            _transitZoneDestination = transitZoneDestination;
+        }
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        private void Start()
-        {
-            HeadToTarget();
-        }
-
-        private void HeadToTarget()
+        public void HeadToTarget()
         {
             _targetPoint = _transitZoneDestination.GetRandomPointInBox();
             transform.LookAt(_targetPoint);

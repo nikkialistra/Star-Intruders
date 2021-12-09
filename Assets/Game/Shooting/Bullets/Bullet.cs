@@ -6,17 +6,17 @@ namespace Game.Shooting.Bullets
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(BulletDamager))]
-    public class Bullet : MonoBehaviour, IPoolable<BulletSpecs, IMemoryPool>, IDisposable
+    public class Bullet : MonoBehaviour, IPoolable<BulletSpecs, Vector3, Quaternion, IMemoryPool>, IDisposable
     {
         private float _lifetime;
         private int _damage;
         
         private float _currentLifetime;
-
-        private IMemoryPool _pool;
-
+        
         private BulletDamager _damager;
         private Rigidbody _rigidbody;
+        
+        private IMemoryPool _pool;
 
         private void Awake()
         {
@@ -34,21 +34,18 @@ namespace Game.Shooting.Bullets
             UpdateCurrentLifetime();
         }
 
-        public void OnSpawned(BulletSpecs bulletSpecs, IMemoryPool pool)
+        public void OnSpawned(BulletSpecs bulletSpecs, Vector3 position, Quaternion rotation, IMemoryPool pool)
         {
             _pool = pool;
-
-            transform.position = bulletSpecs.Position;
-            transform.rotation = bulletSpecs.Rotation;
-
-            _lifetime = bulletSpecs.Lifetime;
-            _damager.SetDamage(bulletSpecs.Damage);
-
-            _rigidbody.velocity = bulletSpecs.Direction * bulletSpecs.MoveSpeed;
+            
+            transform.position = position;
+            transform.rotation = rotation;
+            
+            GetParametersFromSpecs(bulletSpecs);
 
             _currentLifetime = 0;
         }
-        
+
         public void OnDespawned()
         {
             _pool = null;
@@ -57,6 +54,14 @@ namespace Game.Shooting.Bullets
         public void Dispose()
         {
             _pool.Despawn(this);
+        }
+
+        private void GetParametersFromSpecs(BulletSpecs bulletSpecs)
+        {
+            _lifetime = bulletSpecs.Lifetime;
+            _damager.SetDamage(bulletSpecs.Damage);
+
+            _rigidbody.velocity = bulletSpecs.Direction * bulletSpecs.MoveSpeed;
         }
 
         private void UpdateCurrentLifetime()
@@ -68,7 +73,7 @@ namespace Game.Shooting.Bullets
             }
         }
 
-        public class Factory : PlaceholderFactory<BulletSpecs, Bullet>
+        public class Factory : PlaceholderFactory<BulletSpecs, Vector3, Quaternion, Bullet>
         {
         }
     }

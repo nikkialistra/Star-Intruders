@@ -1,4 +1,6 @@
 ﻿using Game.Cameras.Scripts;
+using Game.Environment.TransitZone;
+using Game.Intruders.Scripts;
 using Game.Shooting.Bullets;
 using Game.Shooting.Cannons.Scripts;
 using Game.Shooting.Targeting.Scripts;
@@ -39,6 +41,18 @@ namespace Infrastructure
         [SerializeField] private GameObject _bulletPrefab;
         [Required] 
         [SerializeField] private Transform _bulletsParent;
+        
+        [Title("Intruders")]
+        [MinValue(0)] 
+        [SerializeField] private int _intruderPoolSize;
+        [Required]
+        [SerializeField] private GameObject _intruderPrefab;
+        [Required] 
+        [SerializeField] private Transform _intrudersParent;
+        
+        [Title("TransitZone")]
+        [Required]
+        [SerializeField] private TransitZoneDestination _transitZoneDestination;
 
         public override void InstallBindings()
         {
@@ -47,6 +61,7 @@ namespace Infrastructure
             BindPlayer();
             BindTargeting();
             BindShooting();
+            BindTransitZone();
 
             BindFactories();
         }
@@ -75,16 +90,31 @@ namespace Infrastructure
             Container.BindInstance(_cannon);
         }
 
+        private void BindTransitZone()
+        {
+            Container.BindInstance(_transitZoneDestination);
+        }
+
         private void BindFactories()
         {
-            Container.BindFactory<BulletSpecs, Bullet, Bullet.Factory>()
-                .FromPoolableMemoryPool<BulletSpecs, Bullet, BulletPool>(pool => pool
+            Container.BindFactory<BulletSpecs, Vector3, Quaternion, Bullet, Bullet.Factory>()
+                .FromPoolableMemoryPool<BulletSpecs, Vector3, Quaternion, Bullet, BulletPool>(pool => pool
                 .WithInitialSize(_bulletPoolSize)
                 .FromComponentInNewPrefab(_bulletPrefab)
                 .UnderTransform(_bulletsParent));
+            
+            Container.BindFactory<IntruderSpecs, Vector3, Intruder, Intruder.Factory>()
+                .FromPoolableMemoryPool<IntruderSpecs, Vector3, Intruder, IntruderPool>(pool => pool
+                    .WithInitialSize(_intruderPoolSize)
+                    .FromComponentInNewPrefab(_intruderPrefab)
+                    .UnderTransform(_intrudersParent));
         }
 
-        private class BulletPool : MonoPoolableMemoryPool<BulletSpecs, IMemoryPool, Bullet>
+        private class BulletPool : MonoPoolableMemoryPool<BulletSpecs, Vector3, Quaternion, IMemoryPool, Bullet>
+        {
+        }
+
+        private class IntruderPool : MonoPoolableMemoryPool<IntruderSpecs, Vector3, IMemoryPool, Intruder>
         {
         }
     }

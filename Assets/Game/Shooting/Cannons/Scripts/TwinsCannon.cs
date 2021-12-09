@@ -13,10 +13,6 @@ namespace Game.Shooting.Cannons.Scripts
         [ChildGameObjectsOnly, Required]
         [SerializeField] private Transform _rightMuzzle;
 
-        [Title("Bullet")] 
-        [Required]
-        [SerializeField] private Bullet _bullet;
-
         [Title("Parameters")]
         [MinValue(0)]
         [SerializeField] private float _rechargeTime;
@@ -60,17 +56,17 @@ namespace Game.Shooting.Cannons.Scripts
 
         private void CreateBullet(Vector3 direction)
         {
+            var position = _activeMuzzle.transform.position;
+            var rotation = Quaternion.LookRotation(direction);
             var bulletSpecs = new BulletSpecs
             {
-                Position = _activeMuzzle.transform.position,
-                Rotation = Quaternion.LookRotation(direction),
                 Damage = _damage,
                 Direction = direction,
                 Lifetime = _lifetime,
                 MoveSpeed = _moveSpeed
             };
-
-            _bulletFactory.Create(bulletSpecs);
+            
+            _bulletFactory.Create(bulletSpecs, position, rotation);
         }
 
         private bool IsRechargeFinished()
