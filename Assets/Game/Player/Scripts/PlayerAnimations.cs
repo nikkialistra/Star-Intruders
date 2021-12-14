@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Game.Player.Scripts
+namespace Game.Player
 {
     public class PlayerAnimations : MonoBehaviour
     {

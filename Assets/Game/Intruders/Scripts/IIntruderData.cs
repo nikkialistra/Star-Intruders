@@ -1,4 +1,4 @@
-﻿namespace Game.Intruders.Scripts
+﻿namespace Game.Intruders
 {
     public interface IIntruderData
     {

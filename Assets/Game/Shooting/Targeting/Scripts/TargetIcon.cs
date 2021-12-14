@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Shooting.Targeting.Scripts
+namespace Game.Shooting.Targeting
 {
     public class TargetIcon : MonoBehaviour
     {

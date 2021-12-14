@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Game.Cameras.Scripts
+namespace Game.Cameras
 {
     [RequireComponent(typeof(ShakeCameraOffset))]
     public class CameraMovement : MonoBehaviour

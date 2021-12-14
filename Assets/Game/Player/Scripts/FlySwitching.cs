@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Threading.Tasks;
 using DG.Tweening;
 using Kernel.Types;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Game.Player.Scripts
+namespace Game.Player
 {
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(PlayerAnimations))]

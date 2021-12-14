@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Shooting.Cannons.Scripts
+namespace Game.Shooting.Cannons
 {
     public abstract class Cannon : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using Game.Intruders.Scripts;
+using Game.Intruders;
 using Kernel.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;

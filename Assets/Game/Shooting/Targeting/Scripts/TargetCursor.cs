@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Game.Shooting.Targeting.Scripts
+namespace Game.Shooting.Targeting
 {
     public class TargetCursor : MonoBehaviour
     {

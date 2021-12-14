@@ -1,9 +1,9 @@
-﻿using Game.Cameras.Scripts;
+﻿using Game.Cameras;
 using Game.Environment.TransitZone;
-using Game.Intruders.Scripts;
+using Game.Intruders;
 using Game.Shooting.Bullets;
-using Game.Shooting.Cannons.Scripts;
-using Game.Shooting.Targeting.Scripts;
+using Game.Shooting.Cannons;
+using Game.Shooting.Targeting;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;

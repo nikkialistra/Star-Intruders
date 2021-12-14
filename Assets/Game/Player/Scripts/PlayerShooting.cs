@@ -1,8 +1,8 @@
-﻿using Game.Shooting.Cannons.Scripts;
+﻿using Game.Shooting.Cannons;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Player.Scripts
+namespace Game.Player
 {
     public class PlayerShooting : MonoBehaviour
     {

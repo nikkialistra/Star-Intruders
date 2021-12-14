@@ -1,10 +1,10 @@
-﻿using Game.Cameras.Scripts;
+﻿using Game.Cameras;
 using Kernel.Controls;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-namespace Game.Player.Scripts
+namespace Game.Player
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(FlySwitching))]
@@ -15,7 +15,7 @@ namespace Game.Player.Scripts
     {
         private CameraMovement _cameraMovement;
 
-        private readonly MoveInput _moveInput = new MoveInput();
+        private readonly MoveInput _moveInput = new();
         
         private PlayerInput _input;
         

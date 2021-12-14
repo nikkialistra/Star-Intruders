@@ -1,10 +1,10 @@
-﻿using Game.Shooting.Targeting.Scripts;
+﻿using Game.Shooting.Targeting;
 using Kernel.Types;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Player.Scripts
+namespace Game.Player
 {
     public class Targeting : MonoBehaviour
     {

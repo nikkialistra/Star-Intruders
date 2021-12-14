@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Game.Cameras.Scripts
+namespace Game.Cameras
 {
     public class ShakeCameraOffset : MonoBehaviour
     {

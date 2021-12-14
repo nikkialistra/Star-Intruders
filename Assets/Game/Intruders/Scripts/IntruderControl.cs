@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Game.Intruders.Scripts
+namespace Game.Intruders
 {
     [RequireComponent(typeof(Rigidbody))]
     public class IntruderControl : MonoBehaviour

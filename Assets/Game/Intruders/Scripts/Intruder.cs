@@ -3,7 +3,7 @@ using Kernel.Entity;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Intruders.Scripts
+namespace Game.Intruders
 {
     [RequireComponent(typeof(IntruderControl))]
     [RequireComponent(typeof(EntityHealth))]

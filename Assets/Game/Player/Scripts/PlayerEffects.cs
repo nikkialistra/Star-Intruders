@@ -1,10 +1,10 @@
-﻿using Game.Cameras.Scripts;
+﻿using Game.Cameras;
 using Game.Environment.Asteroids;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
-namespace Game.Player.Scripts
+namespace Game.Player
 {
     public class PlayerEffects : MonoBehaviour
     {
